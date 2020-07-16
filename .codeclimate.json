@@ -1,8 +1,9 @@
 {
   "exclude_patterns": [
-    "./*.json",
+    "./.*.json",
     "./*.md",
-    "./*.yml",
-    "./*.config.js"
+    "./.*.yml",
+    "./*.config.js",
+    "./dist/**/*"
   ]
 }
