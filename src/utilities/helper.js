@@ -20,9 +20,7 @@ const shiftFieldFocus = (fieldToFocus) => {
  */
 const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
   const currentBlockEditableFieldList = [...currentBlock.querySelectorAll('[contenteditable]')]
-
   const focusedFieldIndex = currentBlockEditableFieldList.indexOf(document.activeElement)
-
   const hasMultipleFields = (focusedFieldIndex !== 0 && focusedFieldIndex !== currentBlockEditableFieldList.length)
 
   if (hasMultipleFields) {
@@ -37,8 +35,6 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
         break
 
       default:
-
-        break
     }
   }
 
@@ -54,8 +50,6 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
       break
 
     default:
-
-      break
   }
 }
 
@@ -91,8 +85,6 @@ const moveBlock = (blockToMove, direction) => {
       break
 
     default:
-
-      break
   }
 }
 

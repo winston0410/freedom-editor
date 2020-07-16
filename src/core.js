@@ -5,16 +5,24 @@ const {
 } = require('./utilities/helper.js')
 
 class FreedomEditor {
+  /**
+   * Construct Freedom Editor instance
+   * @author Hugo Sum
+   * @lastUpdateDate 2020-07-16
+   * @param          {object}   customOptions An object with options to initialize Freedom Editor instance
+   */
   constructor (customOptions) {
+    /**
+     * Default options for Freedom Editor instance
+     * @type {Object}
+     * @property {[String]} containerId The id of the container for Freedom Editor instance
+     * @property {[Array]} blockTemplate An array of block instances.  Blocks listed here will be rendered as template when the editor initialize, and their position will be fixed.
+     * @property {[Object]} registeredBlocks An object of block instances to be registered in this editor instance.  The key of each instance should be identical with their instance name
+     * @property {[Array]} blocksControllers An array of block controller instances.  Blocks controllers listed here will be applied to all blocks in this editor instance.
+     * @property {[Object]} i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
+     */
     const defaultOptions = {
       containerId: 'freedom-editor',
-      blockTemplate: [
-
-      ],
-      registeredBlocks: {
-
-      },
-      blocksControllers: [],
       i18n: {
         locale: 'en-US',
         rtl: 'auto'
