@@ -1,6 +1,10 @@
-// Add current focused block into param
-
-// Determine focus switching direction
+/**
+ * Shift users' focus from one field to another
+ * @author Hugo Sum
+ * @lastUpdateDate 2020-07-16
+ * @param          {DOMString}   fieldToFocus Field you want the user to focus
+ * @return         {Void}
+ */
 const shiftFieldFocus = (fieldToFocus) => {
   fieldToFocus.focus()
   if (fieldToFocus.firstChild !== null) {
@@ -52,8 +56,6 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
     default:
 
       break
-
-      return
   }
 }
 
@@ -61,7 +63,7 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
  * Move a block up or down
  * @param  {DOMString} blockToMove Block you want to move
  * @param  {String} direction   Direction to move the block, accept 'up' or 'down'
- * @return {[type]}             [description]
+ * @return {Void}             [description]
  */
 const moveBlock = (blockToMove, direction) => {
   if (blockToMove.matches('[data-block-template]')) {
@@ -69,13 +71,21 @@ const moveBlock = (blockToMove, direction) => {
   }
   switch (direction) {
     case 'up':
-      if (blockToMove.previousElementSibling && !blockToMove.previousElementSibling.matches('[data-block-template]')) {
+      if (!blockToMove.previousElementSibling) {
+        return
+      }
+
+      if (!blockToMove.previousElementSibling.matches('[data-block-template]')) {
         blockToMove.previousElementSibling.before(blockToMove)
       }
       break
 
     case 'down':
-      if (blockToMove.nextElementSibling && !blockToMove.nextElementSibling.matches('[data-block-template]')) {
+      if (!blockToMove.nextElementSibling) {
+        return
+      }
+
+      if (!blockToMove.nextElementSibling.matches('[data-block-template]')) {
         blockToMove.nextElementSibling.after(blockToMove)
       }
       break
