@@ -1,5 +1,15 @@
 # Freedom Editor
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9f10837bc1214eedbf60db845cfa0127)](https://www.codacy.com/manual/winston0410/freedom-editor?utm_source=github.com&utm_medium=referral&utm_content=winston0410/freedom-editor&utm_campaign=Badge_Grade)
+
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+[![Known Vulnerabilities](https://snyk.io/test/github/winston0410/freedom-editor/badge.svg?targetFile=package.json)](https://snyk.io/test/github/winston0410/freedom-editor?targetFile=package.json)
+
+(<https://img.shields.io/github/license/winston0410/freedom-editor>)
+
+<https://img.shields.io/gitter/room/winston0410/freedom-editor>
+
 Freedom Editor is a lightweight, fully extensible, zero-dependencies, framework agonistic block editor. You can use vanilla code or your favorite framework to build blocks you need.
 
 ## Features
@@ -158,4 +168,4 @@ This project is licensed under the MIT License - see the [license](https://githu
 
 ## Acknowledgments
 
-- Inspiration from Gutenberg editor and editor.js
+- Inspiration from [Gutenberg editor from Wordpress](https://wordpress.org/gutenberg/) and [editor.js](https://editorjs.io/)
