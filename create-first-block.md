@@ -10,6 +10,8 @@ This tutorial will guide you to create your first block for Freedom Editor.
 
 - [Structure of a block in Freedom Editor](#structure-of-a-block-in-freedom-editor)
 
+- [Coding standard and style guide](#coding-standard-and-style-guide)
+
 ## Prerequisites
 
 You don't have to be master in Javascript (neither do I!), but you should understand what a class is in JavaScript, as a block in Freedom Editor is created as a class.
@@ -53,3 +55,7 @@ A block that renders a `<h1>` tag and is built without any framework(vanilla cod
 ## Structure of a block in Freedom Editor
 
 TODO
+
+## Coding standard and style guide
+
+To ensure the quality of Freedom Editor blocks, you should follow our coding standard do the followings when you publish your block.

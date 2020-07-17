@@ -1,5 +1,5 @@
 ---
 exclude_paths:
-  - './*.md'
-  - './.*.json'
+  - '**.md'
+  - '**.json'
 ---
