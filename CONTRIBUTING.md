@@ -2,7 +2,7 @@
 
 Thank you so much for being willing to contribute to this project. Together we can build the freest block editor in the world.
 
-The following is a set of guidelines for contributing to Freedom Editor core and its plugins and blocks, which we hope they will make your first PR easy and encouraging.
+The following is a set of guidelines for contributing to Freedom Editor core and its controllers and blocks, which we hope they will make your first PR easy and encouraging.
 
 Remember, all your contribution should adhere to the [Code of Conduct of Freedom Editor](https://github.com/winston0410/freedom-editor/blob/master/CONDUCT.md).
 
@@ -14,7 +14,7 @@ These contributing guidelines are inspired by [Atom's contribution guidelines](h
 
   - [Your First Code Contribution](#your-first-code-contribution)
 
-    - [Create plugins for Freedom Editor](#create-plugins-for-freedom-editor)
+    - [Create controllers for Freedom Editor](#create-controllers-for-freedom-editor)
 
     - [Create blocks for Freedom Editor](#create-blocks-for-freedom-editor)
 
@@ -34,11 +34,11 @@ These contributing guidelines are inspired by [Atom's contribution guidelines](h
 
 ### Your First Code Contribution
 
-#### Create plugins for Freedom Editor
+#### Create controllers for Freedom Editor
 
-If you want to affect the behaviors of the editor, blocks in general or a specific block for Freedom Editor, you should create a plugin.
+If you want to affect the behaviors of the editor, blocks in general or a specific block for Freedom Editor, you should create a controller.
 
-Learn how to [create your first Freedom Editor plugin](https://github.com/winston0410/freedom-editor/blob/master/create-first-plugin.md) here.
+Learn how to [create your first Freedom Editor controller](https://github.com/winston0410/freedom-editor/blob/master/create-first-controller.md) here.
 
 #### Create blocks for Freedom Editor
 
@@ -56,7 +56,7 @@ Before creating bug reports, please check [this list](#before-submitting-a-bug-r
 
 - **Make sure you are using the latest version of Freedom Editor**
 
-- **Determine [which repository the problem should be reported in](https://github.com/winston0410/awesome-freedom-editor)**. Try not to load some plugins or blocks, and see if the issue is still there to determine if plugin, block or the core of Freedom Editor is the cause for any error.
+- **Determine [which repository the problem should be reported in](https://github.com/winston0410/awesome-freedom-editor)**. Try not to load some controllers or blocks, and see if the issue is still there to determine if controller, block or the core of Freedom Editor is the cause for any error.
 
 - Search and see if the problem has already been reported. If it has **and the issue is still open**, add a comment to the existing issue instead of opening a new one.
 

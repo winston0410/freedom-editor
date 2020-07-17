@@ -61,16 +61,16 @@ class FreedomEditor {
   }
 
   /**
-   * Initialize editor and hook plugins to the editor in editor level.  Plugins hooked here will apply to all blocks.
-   * @param  {Array} pluginsOptions An array containing all init functions of plugins
+   * Initialize editor and hook controllers to the editor in editor level.  controllers hooked here will apply to all blocks.
+   * @param  {Array} controllersOptions An array containing all init functions of controllers
    * @return {Object} The instance of Freedom Editor
    */
-  init (pluginsOptions) {
-    if (Array.isArray(pluginsOptions) !== true) {
+  init (controllersOptions) {
+    if (Array.isArray(controllersOptions) !== true) {
       throw new Error('You need to pass an array to init')
     }
 
-    this.options.blocksControllers = pluginsOptions
+    this.options.blocksControllers = controllersOptions
 
     return this.editor
   }
