@@ -4,7 +4,7 @@
   "description": "A lightweight, fully extensible, zero-dependencies, framework agonistic block editor.",
   "main": "/src/core.js",
   "scripts": {
-    "test": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
+    "test": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov",
     "build": "npx rollup -c; npx jsdoc2md --template README.hbs --files /src/core.js"
   },
   "keywords": [
