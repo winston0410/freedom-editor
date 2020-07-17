@@ -4,7 +4,7 @@
   "description": "A lightweight, fully extensible, zero-dependencies, framework agonistic block editor.",
   "main": "/src/core.js",
   "scripts": {
-    "build": "npx rollup -c"
+    "build": "npx rollup -c; npx jsdoc2md --template README.hbs --files /src/core.js"
   },
   "keywords": [
     "Block",
@@ -16,6 +16,12 @@
     "name": "Hugo Sum",
     "email": "hugosum.dev@protonmail.com"
   },
+  "contributors": [{
+
+  }],
+  "bugs": "https://github.com/winston0410/freedom-editor/issues",
+  "homepage": "https://github.com/winston0410/freedom-editor/",
+  "repository": "github:winston0410/freedom-editor",
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
