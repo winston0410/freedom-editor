@@ -6,13 +6,33 @@ Freedom Editor is a lightweight, fully extensible, zero-dependencies, framework 
 
 > The block editor for the Free.
 
+## Table Of Contents
+
+- [Features](#features)
+
+  - [Framework agonistic](#framework-agonistic)
+
+  - [Fully customizable and modular](#Fully-customizable-and-modular)
+
+  - [Lightweight and zero-dependencies](#lightweight-and-zero-dependencies)
+
+  - [Other features](#other-features)
+
+- [Background](#background)
+
+  - [What problem does Freedom Editor try to solve?](#what-problem-does-freedom-editor-try-to-solve?)
+
+  - [How does Freedom Editor works?](#how-does-freedom-editor-works?)
+
+  - [Why is it called Freedom Editor?](#why-is-it-called-freedom-editor?)
+
 ## Features
 
 ### Framework agonistic
 
 Create blocks with vanilla code or with your favorite frontend framework, be it React, Angular, Vue.js, or lighter frameworks like lighterhtml or Reef.
 
-### Full customizable and modular
+### Fully customizable and modular
 
 Unlike other block editors, every parts of Freedom editor is modular except its core loading and saving functions. You can extend it and build whatever you want to control editor and blocks behaviors. Sky is the limit.
 
@@ -40,7 +60,7 @@ The core of Freedom Editor is written in vanilla code, and it only weights 1.5KB
 
 ## Background
 
-### What does Freedom Editor try to solve?
+### What problem does Freedom Editor try to solve?
 
 [Gutenberg editor from Wordpress](https://wordpress.org/gutenberg/) has proven the potential of block editor and its advantages over traditional Rich Text Editor like TinyMCE. I really enjoy using it to predefine a specific block layout for users.
 
@@ -196,9 +216,29 @@ editor.loadBlocks()
 
 TODO
 
+## Optimization
+
+Although Freedom Editor is designed to be a lightweight block editor, you can make it bloat if you don't set it up correctly. The followings is our optimization suggestions.
+
+### Stick to blocks that are made with the same framework.
+
+Although Freedom Editor enables you to use blocks from different framework by its design, in practice you should only register blocks that are made with the same framework, so that you can avoid loading another framework to your frontend.
+
+### Use bundler to bundle all your blocks into a single file
+
+By bundling all your blocks into a single file, all repeated code(which is likely to be the framework you use) can be combined.
+
 ## Contributing
 
-Please read [the contributing guidlines](https://github.com/winston0410/freedom-editor/blob/master/CONTRIBUTING.md) for details of our [Code of Conduct](https://github.com/winston0410/freedom-editor/blob/master/CONDUCT.md), style guide, and the process for submitting pull requests to us.
+To contribute to Freedom Editor, you can do the followings:
+
+- Improve code in Freedom Editor core
+
+- [Create blocks for Freedom Editor](https://github.com/winston0410/freedom-editor/blob/master/create-first-block.md)
+
+- [Create controllers for Freedom Editor](https://github.com/winston0410/freedom-editor/blob/master/create-first-controller.md)
+
+Please read [our contributing guidlines](https://github.com/winston0410/freedom-editor/blob/master/CONTRIBUTING.md) for details of our [Code of Conduct](https://github.com/winston0410/freedom-editor/blob/master/CONDUCT.md) and style guide and code review guide before you start contributing.
 
 ## Authors
 
