@@ -23,8 +23,8 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
   const focusedFieldIndex = currentBlockEditableFieldList.indexOf(document.activeElement)
   const hasMultipleFields = (focusedFieldIndex !== 0 && focusedFieldIndex !== currentBlockEditableFieldList.length)
 
+  // if block has multiple fields
   if (hasMultipleFields) {
-    console.log('This block has multiple fields')
     switch (shiftDirection) {
       case 'up':
         shiftFieldFocus(currentBlockEditableFieldList[focusedFieldIndex - 1])
@@ -40,6 +40,7 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
     return
   }
 
+  // Does not have multiple fields
   const nextBlockEditableFieldList = blockToFocus.querySelectorAll('[contenteditable]')
 
   switch (shiftDirection) {
@@ -87,20 +88,16 @@ const moveBlock = (blockToMove, direction) => {
   switch (direction) {
     case 'up':
 
-      if (!isSwappingBlockPossible(blockToMove.previousElementSibling)) {
-        return
+      if (isSwappingBlockPossible(blockToMove.previousElementSibling)) {
+        blockToMove.previousElementSibling.before(blockToMove)
       }
-
-      blockToMove.previousElementSibling.before(blockToMove)
 
       break
 
     case 'down':
-      if (!isSwappingBlockPossible(blockToMove.nextElementSibling)) {
-        return
+      if (isSwappingBlockPossible(blockToMove.nextElementSibling)) {
+        blockToMove.nextElementSibling.after(blockToMove)
       }
-
-      blockToMove.nextElementSibling.after(blockToMove)
 
       break
 

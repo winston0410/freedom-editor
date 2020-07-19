@@ -38,7 +38,7 @@ Unlike other block editors, every parts of Freedom editor is modular except its 
 
 ### Lightweight and zero-dependencies
 
-The core of Freedom Editor is written in vanilla code, and it only weights 1.5KB gzipped, tremendously smaller than other block editors.
+The core of Freedom Editor is written in vanilla code, and it only weights **1.5KB gzipped**, tremendously smaller than other block editors.
 
 ### Other features
 
