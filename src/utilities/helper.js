@@ -36,6 +36,8 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
 
       default:
     }
+
+    return
   }
 
   const nextBlockEditableFieldList = blockToFocus.querySelectorAll('[contenteditable]')
@@ -54,6 +56,25 @@ const shiftBlockFocus = (currentBlock, shiftDirection, blockToFocus) => {
 }
 
 /**
+ * Check if there is valid block to be swapped with block you want to move up or down
+ * @author Hugo Sum
+ * @lastUpdateDate 2020-07-19
+ * @param          {DOMString}   blockToCheck Block to be swapped with the block you want to move
+ * @return         {Boolean}               True if the checked block exists and it is not a template block
+ */
+const isSwappingBlockPossible = (blockToCheck) => {
+  if (!blockToCheck) {
+    return false
+  }
+
+  if (blockToCheck.matches('[data-block-template]')) {
+    return false
+  }
+
+  return true
+}
+
+/**
  * Move a block up or down
  * @param  {DOMString} blockToMove Block you want to move
  * @param  {String} direction   Direction to move the block, accept 'up' or 'down'
@@ -65,23 +86,22 @@ const moveBlock = (blockToMove, direction) => {
   }
   switch (direction) {
     case 'up':
-      if (!blockToMove.previousElementSibling) {
+
+      if (!isSwappingBlockPossible(blockToMove.previousElementSibling)) {
         return
       }
 
-      if (!blockToMove.previousElementSibling.matches('[data-block-template]')) {
-        blockToMove.previousElementSibling.before(blockToMove)
-      }
+      blockToMove.previousElementSibling.before(blockToMove)
+
       break
 
     case 'down':
-      if (!blockToMove.nextElementSibling) {
+      if (!isSwappingBlockPossible(blockToMove.nextElementSibling)) {
         return
       }
 
-      if (!blockToMove.nextElementSibling.matches('[data-block-template]')) {
-        blockToMove.nextElementSibling.after(blockToMove)
-      }
+      blockToMove.nextElementSibling.after(blockToMove)
+
       break
 
     default:
@@ -110,6 +130,7 @@ const getBlockInstanceList = (editorInstance) => {
 
 module.exports = {
   shiftBlockFocus,
+  shiftFieldFocus,
   moveBlock,
   getBlockInstanceList
 }
