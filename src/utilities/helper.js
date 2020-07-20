@@ -125,7 +125,7 @@ const getBlockInstanceList = (editorInstance) => {
     })
 }
 
-module.exports = {
+export {
   shiftBlockFocus,
   shiftFieldFocus,
   moveBlock,

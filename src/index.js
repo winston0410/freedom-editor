@@ -1,9 +1,9 @@
-const {
+import {
   shiftBlockFocus,
   shiftFieldFocus,
   moveBlock,
   getBlockInstanceList
-} = require('./utilities/helper.js')
+} from './utilities/helper.js'
 
 class FreedomEditor {
   /**
@@ -210,4 +210,6 @@ FreedomEditor.prototype.shiftFieldFocus = shiftFieldFocus
 FreedomEditor.prototype.shiftBlockFocus = shiftBlockFocus
 FreedomEditor.prototype.moveBlock = moveBlock
 
-module.exports = FreedomEditor
+export {
+  FreedomEditor
+}
