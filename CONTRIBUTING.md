@@ -22,8 +22,6 @@ These contributing guidelines are inspired by [Atom's contribution guidelines](h
 
   - [Suggesting Enhancements](#suggesting-enhancements)
 
-  - [Pull Requests](#pull-requests)
-
 - [Styleguides](#styleguides)
 
   - [Git Commit Messages](#git-commit-messages)
@@ -96,51 +94,18 @@ If you are sure there is no duplicate suggestion, follow [this template]() to fi
 
 - **List some other block editors or applications where this enhancement exists.**
 
-### Pull Requests
-
-The process described here has several goals:
-
-- Maintain Freedom Editor's quality
-- Fix problems that are important to users
-
-Please follow these steps to have your contribution considered by the maintainers:
-
-1. Follow all instructions in [the template](PULL_REQUEST_TEMPLATE.md)
-2. Follow the [styleguides](#styleguides)
-3. After you submit your pull request, verify that all [status checks](https://help.github.com/articles/about-status-checks/) are passing
-
-  <details><summary>What if the status checks are failing?</summary>If a status check is failing, and you believe that the failure is unrelated to your change, please leave a comment on the pull request explaining why you believe the failure is unrelated. A maintainer will re-run the status check for you. If we conclude that the failure was a false positive, then we will open an issue to track that problem with our status check suite.</details>
-
-While the prerequisites above must be satisfied prior to having your pull request reviewed, the reviewer(s) may ask you to complete additional design work, tests, or other changes before your pull request can be ultimately accepted.
-
 ## Styleguides
+
+A standardized format of coding and writing commit messages help others understand your code and messages easily. Freedom Editor uses the following guidelines, and you are expected to follow them when you contribute.
 
 ### Git Commit Messages
 
+Freedom Editor uses [Gitmoji](https://gitmoji.carloscuesta.me/) for standardizing git commit messages. Download [Gitmoji-cli](https://github.com/carloscuesta/gitmoji-cli) for writing the commit message easily.
+
+Apart from using the correct emoji, you should abide to the following rules for your commit messages:
+
 - Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters or less
-- Reference issues and pull requests with their corresponding ID
-- When only changing documentation, include `[ci skip]` in the commit title
-- Consider starting the commit message with an applicable emoji:
-
-  - :art: `:art:` when improving the format/structure of the code
-  - :racehorse: `:racehorse:` when improving performance
-  - :memo: `:memo:` when writing docs
-
-  - :bug: `:bug:` when fixing a bug
-
-  - :fire: `:fire:` when removing code or files
-
-  - :white_check_mark: `:white_check_mark:` when adding tests
-
-  - :lock: `:lock:` when dealing with security
-
-  - :arrow_up: `:arrow_up:` when upgrading dependencies
-
-  - :arrow_down: `:arrow_down:` when downgrading dependencies
-
-  - :shirt: `:shirt:` when removing linter warnings
+- Use imperative ("Move cursor to..." not "Moves cursor to...")
 
 ### JavaScript Styleguide
 
