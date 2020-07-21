@@ -62,9 +62,15 @@ class FreedomEditor {
       throw new Error('DefaultBlock must be defined when you initiate new editor.')
     }
 
-    if (!Object.values(this.options.registeredBlocks).includes(this.options.defaultBlock)) {
+    if (!this.options.registeredBlocks.includes(this.options.defaultBlock)) {
       throw new Error('You need to register your options.defaultBlock at options.registeredBlocks')
     }
+
+    this.options.blockTemplate.forEach((blockInstance) => {
+      if (!this.options.registeredBlocks.includes(blockInstance)) {
+        throw new Error('You need to register blocks used in your block template at ptions.registeredBlocks.')
+      }
+    })
 
     if (Array.isArray(this.options.blockTemplate) !== true) {
       throw new Error('You need to pass an array as value for options.blockTemplate')
@@ -186,11 +192,15 @@ class FreedomEditor {
         block.remove()
       } else {
         block.querySelectorAll('[contenteditable]')
-          .forEach((editableBlock) => {
-            editableBlock.textContent = ''
+          .forEach((editableField) => {
+            editableField.textContent = ''
           })
       }
     })
+
+    if (this.editor.childNodes.length === 0) {
+      this.renderBlock(this.options.defaultBlock, false, null)
+    }
   }
 }
 
