@@ -68,7 +68,7 @@ const isSwappingBlockPossible = (blockToCheck) => {
     return false
   }
 
-  if (blockToCheck.matches('[data-block-template]')) {
+  if (blockToCheck.matches('[data-block-template="true"]')) {
     return false
   }
 
@@ -82,7 +82,7 @@ const isSwappingBlockPossible = (blockToCheck) => {
  * @return {Void}             [description]
  */
 const moveBlock = (blockToMove, direction) => {
-  if (blockToMove.matches('[data-block-template]')) {
+  if (blockToMove.matches('[data-block-template="true"]')) {
     return
   }
   switch (direction) {
@@ -105,22 +105,26 @@ const moveBlock = (blockToMove, direction) => {
   }
 }
 
+const getRegisteredBlocksNameList = (editorInstance) => {
+  return editorInstance.options.registeredBlocks.map((registeredBlock) => {
+    return registeredBlock.constructor.name
+  })
+}
+
 /**
  * Return an array of block instances of blocks currently in DOM
  * @param  {Class} editorInstance An instance of the editor
  * @return {Array}                an array of block instances of blocks currently in DOM
  */
-const getBlockInstanceList = (editorInstance) => {
-  const registeredBlockList = Object.values(editorInstance.options.registeredBlocks).map((registeredBlock) => {
-    return registeredBlock.constructor.name
-  })
+const getBlockInstancesListFromDOM = (editorInstance) => {
+  const registeredBlockList = getRegisteredBlocksNameList(editorInstance)
 
   // Return list of Block instance, so that we can assign specific save() funciton for each block
   return [...editorInstance.editor.childNodes]
     .map((block) => {
       const indexInRegisteredBlockList = registeredBlockList.indexOf(block.dataset.blockType)
       if (indexInRegisteredBlockList !== -1) {
-        return Object.values(editorInstance.options.registeredBlocks)[indexInRegisteredBlockList]
+        return editorInstance.options.registeredBlocks[indexInRegisteredBlockList]
       }
     })
 }
@@ -129,5 +133,6 @@ export {
   shiftBlockFocus,
   shiftFieldFocus,
   moveBlock,
-  getBlockInstanceList
+  getRegisteredBlocksNameList,
+  getBlockInstancesListFromDOM
 }

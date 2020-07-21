@@ -2,7 +2,8 @@ import {
   shiftBlockFocus,
   shiftFieldFocus,
   moveBlock,
-  getBlockInstanceList
+  getRegisteredBlocksNameList,
+  getBlockInstancesListFromDOM
 } from './utilities/helper.js'
 
 class FreedomEditor {
@@ -18,8 +19,8 @@ class FreedomEditor {
      * @type {Object}
      * @property {[String]} containerId The id of the container for Freedom Editor instance
      * @property {[Array]} blockTemplate An array of block instances.  Blocks listed here will be rendered as template when the editor initialize, and their position will be fixed.
-     * @property {[Object]} registeredBlocks An object of block instances to be registered in this editor instance.  The key of each instance should be identical with their instance name
-     * @property {[Array]} blocksControllers An array of block controller instances.  Blocks controllers listed here will be applied to all blocks in this editor instance.
+     * @property {[Array]} registeredBlocks An array of block instances to be registered in this editor instance.
+     * @property {[Array]} blocksControllers Blocks controllers listed here will be applied to all blocks in this editor instance.  You should pass this array through FreedomEditor.init() instead of here.
      * @property {[Object]} i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
      */
     const defaultOptions = {
@@ -32,8 +33,10 @@ class FreedomEditor {
 
     if (customOptions !== undefined && typeof customOptions !== 'object') {
       throw new Error('You can only pass an object as constructor options for FreedomEditor')
-      return
     }
+
+    // Ensure no duplicate values in registeredBlocks
+    customOptions.registeredBlocks = [...new Set(customOptions.registeredBlocks)]
 
     this.options = {
       ...defaultOptions,
@@ -41,24 +44,12 @@ class FreedomEditor {
     }
 
     this.editor = document.getElementById(this.options.containerId)
-    this.editor.setAttribute('dir', this.options.i18n.rtl)
-
-    const afterRenderEditor = new CustomEvent('freedom-editor:after-select-editor-container', {
-      detail: {
-        editor: this.editor
-      },
-      cancelable: true
-    })
-
-    window.dispatchEvent(afterRenderEditor)
 
     if (this.editor === null) {
       throw new Error('The given ID for initiating editor container returns null.')
     }
 
-    if (!this.options.defaultBlock) {
-      throw new Error('DefaultBlock must be defined when you initiate new editor.')
-    }
+    this.editor.setAttribute('dir', this.options.i18n.rtl)
   }
 
   /**
@@ -67,6 +58,18 @@ class FreedomEditor {
    * @return {Object} The instance of Freedom Editor
    */
   init (controllersOptions) {
+    if (!this.options.defaultBlock) {
+      throw new Error('DefaultBlock must be defined when you initiate new editor.')
+    }
+
+    if (!Object.values(this.options.registeredBlocks).includes(this.options.defaultBlock)) {
+      throw new Error('You need to register your options.defaultBlock at options.registeredBlocks')
+    }
+
+    if (Array.isArray(this.options.blockTemplate) !== true) {
+      throw new Error('You need to pass an array as value for options.blockTemplate')
+    }
+
     if (Array.isArray(controllersOptions) !== true) {
       throw new Error('You need to pass an array to init')
     }
@@ -94,28 +97,20 @@ class FreedomEditor {
     // Assign order attribute to new block
     const newBlock = blockInstance.render(this.options.i18n, savedData)
     newBlock.dataset.order = this.editor.childNodes.length
-    if (isTemplateBlock === true) {
+    if (isTemplateBlock === 'true') {
       newBlock.dataset.blockTemplate = true
+    } else {
+      newBlock.dataset.blockTemplate = false
     }
 
-    // Block controler
-    const mergedControllers = [...this.options.blocksControllers, ...blockInstance.options.controllers]
-
-    console.log(mergedControllers)
+    const mergedControllers = this.options.blocksControllers.map((controllerForAllBlocks) => {
+      const controllerToCopyFrom = blockInstance.options.controllers.find((controllerForSpecificBlock) => controllerForAllBlocks.constructor.name === controllerForSpecificBlock.constructor.name)
+      return Object.assign(controllerForAllBlocks, controllerToCopyFrom)
+    })
 
     mergedControllers.forEach((controller) => {
-      controller(newBlock)
+      controller.init(this, newBlock)
     })
-
-    const blockRendered = new CustomEvent('freedom-editor:after-render-block', {
-      detail: {
-        blockType: newBlock.dataset.blockType,
-        block: newBlock
-      },
-      cancelable: true
-    })
-
-    window.dispatchEvent(blockRendered)
 
     this.editor.append(newBlock)
 
@@ -128,7 +123,7 @@ class FreedomEditor {
    * @return {undefined}
    */
   removeBlock (block) {
-    if (block.matches('[data-block-template]')) {
+    if (block.matches('[data-block-template="true"]')) {
       return
     }
 
@@ -144,28 +139,21 @@ class FreedomEditor {
    */
   loadBlocks (savedData) {
     if (!savedData) {
-      if (Array.isArray(this.options.blockTemplate) !== true) {
-        throw new Error('You need to pass array for blockTemplate')
-        return
-      }
-
       if (this.options.blockTemplate.length > 0) {
         return this.options.blockTemplate.map((block) => this.renderBlock(block, true))
       }
+      return this.renderBlock(this.options.defaultBlock, false)
     }
 
     return savedData.data.map((block) => {
-      const blockIndexInRegisteredBlockList = Object.values(this.options.registeredBlocks)
-        .map((registeredBlock) => {
-          return registeredBlock.constructor.name
-        })
-        .indexOf(block.type)
+      const blockIndexInRegisteredBlockList = getRegisteredBlocksNameList(this).indexOf(block.type)
 
       if (blockIndexInRegisteredBlockList === -1) {
         throw new Error("You are trying to load a block that you haven't registered when you initzalize the editor")
       }
 
-      return this.renderBlock(this.options.registeredBlocks[blockIndexInRegisteredBlockList], false, block.data)
+      // TODO: Fix bug where a block is template or not is not shown in the saved JSON data, thus the loaded block
+      return this.renderBlock(this.options.registeredBlocks[blockIndexInRegisteredBlockList], block.isTemplateBlock, block)
     })
   }
 
@@ -178,7 +166,7 @@ class FreedomEditor {
     const blocksInDOM = [...this.editor.childNodes]
 
     const data = blocksInDOM
-      .map((blockInDom, index) => getBlockInstanceList(this)[index].save(blockInDom))
+      .map((blockInDom, index) => getBlockInstancesListFromDOM(this)[index].save(blockInDom))
       .filter(
         blockData => blockData !== (false || undefined)
       )
@@ -194,7 +182,7 @@ class FreedomEditor {
    */
   resetBlocks () {
     [...this.editor.childNodes].forEach((block) => {
-      if (!block.matches('[data-block-template]')) {
+      if (!block.matches('[data-block-template="true"]')) {
         block.remove()
       } else {
         block.querySelectorAll('[contenteditable]')
