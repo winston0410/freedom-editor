@@ -28,11 +28,49 @@ If you want to publish your controller as a scoped packages under `@freedom-edit
 
 ## Structure of a controller in Freedom Editor
 
-In Freedom Editor, controllers are attached to blocks instead of the editor. You can attach a controller to all blocks when you create a new instance of `FreedomEditor` by passing them as value of `customOptions.blocksControllers()`, or attach it selectively to specific block when you create a new instance for them.
+In Freedom Editor, controllers are attached to blocks instead of the editor. You can attach a controller to all blocks when you create a new instance of `FreedomEditor` by passing them as value of `customOptions.blocksControllers()`.
+
+```
+import { FreedomEditor } from '@freedom-editor/core'
+
+const editor = new FreedomEditor({
+  //Other options...
+  blocksControllers: [
+  //Register your controllers for all blocks here
+  new FreedomEditorKeyBindings()
+  ]
+})
+```
+
+You can also attach it selectively to specific block when you create a new instance for them.
+
+```
+import { FreedomEditor } from '@freedom-editor/core'
+
+import { Paragraph } from '@freedom-editor/lighterhtml-paragraph-block'
+
+//Create new Freedom Editor Instance as above...
+
+const paragraphBlock = new Paragraph({
+  //Other options...
+  controllers: [
+  //Register your controllers for paragraph block here
+  new FreedomEditorKeyBindings()
+  ]
+  })
+```
+
+> If you register the same controller in both Freedom Editor instance and a block instance, **options of the controller registered in block instance will take precedence and merge** with the one registered in Freedom Editor Instance.
 
 All elements created by controllers are encapsulated inside the container of a block.
 
-A valid controller in Freedom Editor needs to have an `init()` method. This method will be called when a block is rendered to DOM with `FreedomEditor.renderBlock()`, with the newly rendered block will be passed as a parameter to `init()`.
+A valid controller in Freedom Editor needs to have an `init()` method. This method will be called when a block is rendered to DOM with `FreedomEditor.renderBlock()`, with the newly rendered block and the instance of Freedom Editor passed as parameters to `init()`.
+
+```
+init (editorInstance, renderedBlock){
+  //Make your transformation here
+}
+```
 
 This way, you can then transform, append DOM elements you want or apply your control logic to that block from the controller.
 
