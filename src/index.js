@@ -149,9 +149,9 @@ class FreedomEditor {
   loadBlocks (savedData) {
     if (!savedData) {
       if (this.options.blockTemplate.length > 0) {
-        return this.options.blockTemplate.map((block) => this.renderBlock(block, true))
+        return this.options.blockTemplate.map((block) => this.renderBlock(block, 'true'))
       }
-      return this.renderBlock(this.options.defaultBlock, false)
+      return this.renderBlock(this.options.defaultBlock, 'false')
     }
 
     return savedData.data.map((block) => {
