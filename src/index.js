@@ -135,7 +135,10 @@ class FreedomEditor {
 
     // Only shift focus if the block to be removed is not the last block
     this.shiftBlockFocus(block, 'up', block.previousElementSibling)
-    block.remove()
+
+    if (this.editor.childNodes.length !== 1) {
+      block.remove()
+    }
   }
 
   /**
