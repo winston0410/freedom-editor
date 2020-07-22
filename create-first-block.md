@@ -1,4 +1,4 @@
-# Create your first block for Freedom editor
+# Create your first block for Freedom Editor
 
 This tutorial will guide you to create your first block for Freedom Editor.
 
@@ -20,9 +20,9 @@ In order to help you start building your block quicker, we have prepared a [Free
 
 ## Prerequisites
 
-You don't have to be master in Javascript (neither do I!), but you should understand what a class is in JavaScript, as a block in Freedom Editor is created as a class.
+Based on our styling guide, you should learn how to use a linter like [ESLint](https://eslint.org/docs/user-guide/getting-started) to ensure your code follow [JS Standard style](https://standardjs.com/).
 
-You should also learn how to use a linter like [ESLint](https://eslint.org/docs/user-guide/getting-started) to ensure the quality of your code.
+You should also install [Gitmoji-CLI](https://www.npmjs.com/package/gitmoji-cli) for creating git commit messages that abide by [our guidelines](https://standardjs.com/).
 
 ## Package naming guidelines
 
