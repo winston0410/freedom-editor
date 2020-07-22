@@ -13,6 +13,6 @@
   "rules": {
     "no-unused-vars": 1,
     "no-unreachable": 0,
-    "prefer-object-spread": 2
+    "prefer-object-spread": 1
   }
 }
