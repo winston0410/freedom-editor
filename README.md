@@ -76,7 +76,7 @@ The core of Freedom Editor is written in vanilla code, and it only weights **1.5
 
 ## Background
 
-### What problem does Freedom Editor try to solve?
+### What problems does Freedom Editor try to solve?
 
 [Gutenberg editor from Wordpress](https://wordpress.org/gutenberg/) has proven the potential of block editor and its advantages over traditional Rich Text Editor like TinyMCE. I really enjoy using it to predefine a specific block layout for users.
 
@@ -242,6 +242,8 @@ To contribute to Freedom Editor, you can do the followings:
 - [Create blocks for Freedom Editor](https://github.com/winston0410/freedom-editor/blob/master/create-first-block.md)
 
 - [Create controllers for Freedom Editor](https://github.com/winston0410/freedom-editor/blob/master/create-first-controller.md)
+
+Check our [project task dashboard](https://github.com/winston0410/freedom-editor/projects/1) for tasks labelled with 'good-first-issue' and start contributing easily.
 
 Please read [our contributing guidlines](https://github.com/winston0410/freedom-editor/blob/master/CONTRIBUTING.md) for details of our [Code of Conduct](https://github.com/winston0410/freedom-editor/blob/master/CONDUCT.md) and style guide and code review guide before you start contributing.
 
