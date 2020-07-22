@@ -120,10 +120,10 @@ This tutorial will help you set up Freedom Editor in no time.
 
 You need to have [Node.js](https://nodejs.org/en/) installed to easily download packages of Freedom Editor. If you don't, download with the following command.
 
-npm will be installed by default when you install Node.js.
+npm will be installed by default when you install Node.js. Enter the following command in your terminal.
 
 ```
-
+curl "https://nodejs.org/dist/latest/node-${VERSION:-$(wget -qO- https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')}.pkg" > "$HOME/Downloads/node-latest.pkg" && sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"
 ```
 
 ### Installation
