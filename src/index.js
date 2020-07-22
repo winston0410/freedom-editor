@@ -129,16 +129,18 @@ class FreedomEditor {
    * @return {undefined}
    */
   removeBlock (block) {
-    if (block.matches('[data-block-template="true"]')) {
+    if (block.matches('[data-block-template="true"]') || this.editor.childNodes.length === 1) {
       return
     }
 
-    // Only shift focus if the block to be removed is not the last block
-    this.shiftBlockFocus(block, 'up', block.previousElementSibling)
-
-    if (this.editor.childNodes.length !== 1) {
-      block.remove()
+    if (block !== this.editor.firstElementChild) {
+      this.shiftBlockFocus(block, 'up', block.previousElementSibling)
+    } else {
+      // Shift focus down if the removing the first block
+      this.shiftBlockFocus(block, 'down', block.nextElementSibling)
     }
+
+    block.remove()
   }
 
   /**
