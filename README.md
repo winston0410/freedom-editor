@@ -211,7 +211,7 @@ editor.loadBlocks()
 
 As Freedom Editor is very modular, **no blocks or controllers are included by default**. You need to download controllers and blocks to make it useful.
 
-You can find a list of [Freedom Editor controllers and blocks](https://github.com/winston0410/awesome-freedom-editor) here.
+You can find a list of [Freedom Editor controllers and blocks](https://www.npmjs.com/search?q=freedom-editor) here.
 
 ### Awesome Freedom Editor
 
