@@ -1,6 +1,6 @@
 {
   "name": "@freedom-editor/core",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A lightweight, fully extensible, zero-dependencies, framework agonistic block editor.",
   "main": "./src/index.js",
   "scripts": {
@@ -17,7 +17,9 @@
     "name": "Hugo Sum",
     "email": "hugosum.dev@protonmail.com"
   },
-  "contributors": [{}],
+  "contributors": [
+    {}
+  ],
   "bugs": "https://github.com/winston0410/freedom-editor/issues",
   "homepage": "https://github.com/winston0410/freedom-editor/",
   "repository": "github:winston0410/freedom-editor",
