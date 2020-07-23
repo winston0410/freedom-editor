@@ -1,10 +1,10 @@
-import {
+const {
   shiftBlockFocus,
   shiftFieldFocus,
   moveBlock,
   getRegisteredBlocksNameList,
   getBlockInstancesListFromDOM
-} from './utilities/helper.js'
+} = require('./utilities/helper.js')
 
 class FreedomEditor {
   /**

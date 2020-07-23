@@ -129,7 +129,7 @@ const getBlockInstancesListFromDOM = (editorInstance) => {
     })
 }
 
-export {
+module.exports = {
   shiftBlockFocus,
   shiftFieldFocus,
   moveBlock,
