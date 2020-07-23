@@ -30,5 +30,29 @@ export default [{
       include: ['./src/**', 'node_modules/**']
     })
   ]
+},
+{
+  input: 'src/index.js',
+  output: {
+    file: 'dist/index.cjs.js',
+    format: 'cjs',
+    plugins: [
+      terser({
+        compress: {
+          drop_console: true
+        },
+        output: {
+          comments: false
+        },
+        ecma: 2019
+      })
+    ]
+  },
+  plugins: [
+    nodeResolve({}),
+    commonjs({
+      include: ['./src/**', 'node_modules/**']
+    })
+  ]
 }
 ]
