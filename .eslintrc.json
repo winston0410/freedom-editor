@@ -1,10 +1,15 @@
 {
   "env": {
     "browser": true,
+    "jasmine": true,
     "es2020": true
   },
+  "plugins": [
+    "jasmine"
+  ],
   "extends": [
-    "standard"
+    "standard",
+    "plugin:jasmine/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2020,
