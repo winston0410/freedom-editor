@@ -9,15 +9,22 @@ const expect = chai.expect
 
 describe('FreedomEditorInstance.init()', function () {
   beforeEach(function () {
+    const editorContainer = document.createElement('div')
+    editorContainer.id = 'freedom-editor'
+
     const editor = new FreedomEditor(
       {
-        con
+        containerId: 'freedom-editor'
       }
     )
+
+    return editor
   })
 
   it('should throw if defaultBlock is not defined', function () {
     expect(editor.init()).to.throw()
+
+    done()
   })
 
   /* it('should throw if defaultBlock is not registered', function () {

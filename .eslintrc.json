@@ -5,11 +5,11 @@
     "es2020": true
   },
   "plugins": [
-    "jasmine"
+    "mocha"
   ],
   "extends": [
     "standard",
-    "plugin:jasmine/recommended"
+    "plugin:mocha/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 2020,
