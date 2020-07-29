@@ -11,7 +11,7 @@ describe('FreedomEditorInstance.init()', function () {
   beforeEach(function () {
     const editor = new FreedomEditor(
       {
-
+        con
       }
     )
   })

@@ -42,14 +42,6 @@ class FreedomEditor {
       ...defaultOptions,
       ...customOptions
     }
-
-    this.editor = document.getElementById(this.options.containerId)
-
-    if (this.editor === null) {
-      throw new Error('The given ID for initiating editor container returns null.')
-    }
-
-    this.editor.setAttribute('dir', this.options.i18n.rtl)
   }
 
   /**
@@ -58,6 +50,13 @@ class FreedomEditor {
    * @return {Object} The instance of Freedom Editor
    */
   init (controllersOptions) {
+    this.editor = document.getElementById(this.options.containerId)
+
+    if (this.editor === null) {
+      throw new Error('No DOM element can be found with the given ID for editor container.')
+    }
+
+    this.editor.setAttribute('dir', this.options.i18n.rtl)
     if (!this.options.defaultBlock) {
       throw new Error('DefaultBlock must be defined when you initiate new editor.')
     }
