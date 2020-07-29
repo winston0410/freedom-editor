@@ -213,6 +213,6 @@ FreedomEditor.prototype.shiftFieldFocus = shiftFieldFocus
 FreedomEditor.prototype.shiftBlockFocus = shiftBlockFocus
 FreedomEditor.prototype.moveBlock = moveBlock
 
-export {
+module.exports = {
   FreedomEditor
 }
