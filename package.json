@@ -18,7 +18,9 @@
     "name": "Hugo Sum",
     "email": "hugosum.dev@protonmail.com"
   },
-  "contributors": [{}],
+  "contributors": [
+    {}
+  ],
   "bugs": "https://github.com/winston0410/freedom-editor/issues",
   "homepage": "https://github.com/winston0410/freedom-editor/",
   "repository": "github:winston0410/freedom-editor",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
+    "basichtml": "^2.3.0",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.5.0",
@@ -39,7 +42,6 @@
     "husky": "^4.2.5",
     "jsdoc": "^3.6.4",
     "jsdoc-to-markdown": "^6.0.1",
-    "jsdom": "^16.3.0",
     "mocha": "^8.0.1",
     "nyc": "^15.1.0",
     "rollup": "^2.22.1",
