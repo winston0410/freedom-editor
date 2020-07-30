@@ -13,53 +13,29 @@ const {
 const chai = require('chai')
 const expect = chai.expect
 
-describe('FreedomEditorInstance', function () {
-  describe('FreedomEditorInstance.loadBlocks()', function () {
-    let editorContainer, editor, paragraphBlock
+describe('FreedomEditorInstance.loadBlocks()', function () {
+  let editorContainer, editor, paragraphBlock
+
+  beforeEach(function (done) {
+    editorContainer = document.createElement('div')
+    editorContainer.setAttribute('id', 'freedom-editor')
+    document.body.append(editorContainer)
+
+    paragraphBlock = new Paragraph()
+
+    done()
+  })
+
+  afterEach(function (done) {
+    editorContainer.remove()
+
+    done()
+  })
+
+  describe('if block template is empty and no block data has been passed to it', function () {
+    let defaultBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
 
     beforeEach(function (done) {
-      editorContainer = document.createElement('div')
-      editorContainer.setAttribute('id', 'freedom-editor')
-      document.body.append(editorContainer)
-
-      paragraphBlock = new Paragraph()
-
-      done()
-    })
-
-    afterEach(function (done) {
-      editorContainer.remove()
-
-      console.log('Remove editor')
-
-      done()
-    })
-
-    it('should load and return defaultBlock if block template is empty and no data is passed to loadBlocks()', function (done) {
-      editor = new FreedomEditor({
-        containerId: 'freedom-editor',
-        defaultBlock: paragraphBlock,
-        registeredBlocks: [
-          paragraphBlock
-        ]
-      })
-
-      editor.init([])
-
-      editor.loadBlocks()
-
-      const defaultBlockInstanceName = editor.options.defaultBlock.constructor.name
-
-      const blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
-
-      console.log(blocksInDOMNameList)
-
-      expect(defaultBlockInstanceName).to.eql(blocksInDOMNameList)
-
-      done()
-    })
-
-    it('should load and return blocks listed in block template if no data is passed to loadBlocks()', function (done) {
       editor = new FreedomEditor({
         containerId: 'freedom-editor',
         defaultBlock: paragraphBlock,
@@ -67,20 +43,77 @@ describe('FreedomEditorInstance', function () {
           paragraphBlock
         ],
         blockTemplate: [
-          paragraphBlock,
+
+        ]
+      })
+
+      editor.init([])
+
+      returnedDOMElementsList = editor.loadBlocks()
+
+      done()
+    })
+
+    it('should load the default block in DOM', function (done) {
+      if (!Array.isArray(editor.options.defaultBlock)) {
+        defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
+        blocksInDOMNameList = [...editor.editor.childNodes]
+          .map((blockInDOM) => blockInDOM.dataset.blockType)
+          .join('')
+      }
+
+      expect(defaultBlockInstanceNameList).to.eql(blocksInDOMNameList)
+      done()
+    })
+
+    it('should return DOM element of the default block', function (done) {
+      if (!Array.isArray(editor.options.defaultBlock)) {
+        defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
+      }
+
+      expect(defaultBlockInstanceNameList).to.eql(returnedDOMElementsList.dataset.blockType)
+
+      done()
+    })
+  })
+
+  describe('if block template is not empty and no block data has been passed to it', function () {
+    let blockTemplateBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
+    beforeEach(function (done) {
+      editor = new FreedomEditor({
+        containerId: 'freedom-editor',
+        defaultBlock: paragraphBlock,
+        registeredBlocks: [
+          paragraphBlock
+        ],
+        blockTemplate: [
           paragraphBlock
         ]
       })
 
       editor.init([])
 
-      const blockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+      returnedDOMElementsList = editor.loadBlocks()
 
-      editor.loadBlocks()
+      done()
+    })
 
-      const blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+    it('should load blocks listed in block template in DOM', function (done) {
+      blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
 
-      expect(blockInstanceNameList).to.eql(blocksInDOMNameList)
+      blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+
+      expect(blockTemplateBlockInstanceNameList).to.eql(blocksInDOMNameList)
+
+      done()
+    })
+
+    it('should return DOM elements of blocks listed in block template', function (done) {
+      blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+
+      returnedDOMElementsList = [...returnedDOMElementsList].map((returnedDOMElement) => returnedDOMElement.dataset.blockType)
+
+      expect(blockTemplateBlockInstanceNameList).to.eql(returnedDOMElementsList)
 
       done()
     })
