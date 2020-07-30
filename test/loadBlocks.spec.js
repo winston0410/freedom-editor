@@ -36,6 +36,14 @@ describe('FreedomEditorInstance', function () {
     })
 
     it('should load and return defaultBlock if block template is empty and no data is passed to loadBlocks()', function (done) {
+      editor = new FreedomEditor({
+        containerId: 'freedom-editor',
+        defaultBlock: paragraphBlock,
+        registeredBlocks: [
+          paragraphBlock
+        ]
+      })
+
       editor.init([])
 
       editor.loadBlocks()
