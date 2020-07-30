@@ -18,7 +18,7 @@ class FreedomEditor {
      * Default options for Freedom Editor instance
      * @type {Object}
      * @property {[String]} containerId The id of the container for Freedom Editor instance
-     * @property {[Array]} blockTemplate An array of block instances.  Blocks listed here will be rendered as template when the editor initialize, and their position will be fixed.
+     * @property {[Array]} blockTemplate An array of block instances.  Blocks listed here will be rendered as template when the editor initialize, and their position will be fixed. This property is required.
      * @property {[Array]} registeredBlocks An array of block instances to be registered in this editor instance.
      * @property {[Array]} blocksControllers Blocks controllers listed here will be applied to all blocks in this editor instance.  You should pass this array through FreedomEditor.init() instead of here.
      * @property {[Object]} i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
@@ -65,17 +65,15 @@ class FreedomEditor {
       throw new Error('You need to register your options.defaultBlock at options.registeredBlocks')
     }
 
-    if (this.options.blockTemplate) {
-      if (Array.isArray(this.options.blockTemplate) !== true) {
-        throw new Error('You need to pass an array as value for options.blockTemplate')
-      }
-
-      this.options.blockTemplate.forEach((blockInstance) => {
-        if (!this.options.registeredBlocks.includes(blockInstance)) {
-          throw new Error('You need to register blocks used in your block template at ptions.registeredBlocks.')
-        }
-      })
+    if (Array.isArray(this.options.blockTemplate) !== true) {
+      throw new Error('You need to pass an array as value for options.blockTemplate')
     }
+
+    this.options.blockTemplate.forEach((blockInstance) => {
+      if (!this.options.registeredBlocks.includes(blockInstance)) {
+        throw new Error('You need to register blocks used in your block template at ptions.registeredBlocks.')
+      }
+    })
 
     if (Array.isArray(controllersOptions) !== true) {
       throw new Error('You need to pass an array to init')
