@@ -124,7 +124,7 @@ class FreedomEditor {
 
   /**
    * Remove a specific block from editor
-   * @param  {Object} block Block to be removed
+   * @param  {Object} block Block to be removed from DOM
    * @return {undefined}
    */
   removeBlock (block) {

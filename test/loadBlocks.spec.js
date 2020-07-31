@@ -6,9 +6,15 @@ const {
   Paragraph
 } = require('@freedom-editor/vanilla-paragraph-block')
 
+const jsdom = require('jsdom')
 const {
-  document
-} = require('basichtml').init()
+  JSDOM
+} = jsdom
+const dom = new JSDOM('<html><body></body></html>')
+
+global.document = dom.window.document
+global.window = dom.window
+global.navigator = dom.window.navigator
 
 const chai = require('chai')
 const expect = chai.expect
@@ -19,10 +25,8 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
   beforeEach(function (done) {
     editorContainer = document.createElement('div')
     editorContainer.setAttribute('id', 'freedom-editor')
+
     document.body.append(editorContainer)
-
-    paragraphBlock = new Paragraph()
-
     done()
   })
 
@@ -32,54 +36,57 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
     done()
   })
 
-  describe('if block template is empty and no block data has been passed to it', function () {
-    let defaultBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
+  describe('if block template is empty', function () {
+    describe('if no block data was passed to it', function () {
+      let defaultBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
 
-    beforeEach(function (done) {
-      editor = new FreedomEditor({
-        containerId: 'freedom-editor',
-        defaultBlock: paragraphBlock,
-        registeredBlocks: [
-          paragraphBlock
-        ],
-        blockTemplate: [
+      beforeEach(function (done) {
+        paragraphBlock = new Paragraph()
 
-        ]
+        editor = new FreedomEditor({
+          containerId: 'freedom-editor',
+          defaultBlock: paragraphBlock,
+          registeredBlocks: [
+            paragraphBlock
+          ],
+          blockTemplate: [
+
+          ]
+        })
+
+        editor.init([])
+        returnedDOMElementsList = editor.loadBlocks()
+        done()
       })
 
-      editor.init([])
+      it('should load the default block in DOM', function (done) {
+        if (!Array.isArray(editor.options.defaultBlock)) {
+          defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
+          blocksInDOMNameList = [...editor.editor.childNodes]
+            .map((blockInDOM) => blockInDOM.dataset.blockType)
+            .join('')
+        }
 
-      returnedDOMElementsList = editor.loadBlocks()
+        expect(defaultBlockInstanceNameList).to.eql(blocksInDOMNameList)
+        done()
+      })
 
-      done()
-    })
+      it('should return DOM element of the default block', function (done) {
+        if (!Array.isArray(editor.options.defaultBlock)) {
+          defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
+        }
 
-    it('should load the default block in DOM', function (done) {
-      if (!Array.isArray(editor.options.defaultBlock)) {
-        defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
-        blocksInDOMNameList = [...editor.editor.childNodes]
-          .map((blockInDOM) => blockInDOM.dataset.blockType)
-          .join('')
-      }
+        expect(defaultBlockInstanceNameList).to.eql(returnedDOMElementsList.dataset.blockType)
 
-      expect(defaultBlockInstanceNameList).to.eql(blocksInDOMNameList)
-      done()
-    })
-
-    it('should return DOM element of the default block', function (done) {
-      if (!Array.isArray(editor.options.defaultBlock)) {
-        defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
-      }
-
-      expect(defaultBlockInstanceNameList).to.eql(returnedDOMElementsList.dataset.blockType)
-
-      done()
+        done()
+      })
     })
   })
 
-  describe('if block template is not empty and no block data has been passed to it', function () {
-    let blockTemplateBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
+  describe('if block template is not empty', function () {
     beforeEach(function (done) {
+      paragraphBlock = new Paragraph()
+
       editor = new FreedomEditor({
         containerId: 'freedom-editor',
         defaultBlock: paragraphBlock,
@@ -90,32 +97,78 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
           paragraphBlock
         ]
       })
-
-      editor.init([])
-
-      returnedDOMElementsList = editor.loadBlocks()
-
       done()
     })
+    describe('if no block data was passed to it', function () {
+      let blockTemplateBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
 
-    it('should load blocks listed in block template in DOM', function (done) {
-      blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+      beforeEach(function (done) {
+        editor.init([])
+        returnedDOMElementsList = editor.loadBlocks()
+        done()
+      })
 
-      blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+      it('should load blocks listed in block template in DOM', function (done) {
+        blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
 
-      expect(blockTemplateBlockInstanceNameList).to.eql(blocksInDOMNameList)
+        blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
 
-      done()
+        expect(blockTemplateBlockInstanceNameList).to.eql(blocksInDOMNameList)
+
+        done()
+      })
+
+      it('should return DOM elements of blocks listed in block template', function (done) {
+        blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+
+        returnedDOMElementsList = [...returnedDOMElementsList].map((returnedDOMElement) => returnedDOMElement.dataset.blockType)
+
+        expect(blockTemplateBlockInstanceNameList).to.eql(returnedDOMElementsList)
+
+        done()
+      })
     })
 
-    it('should return DOM elements of blocks listed in block template', function (done) {
-      blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+    describe('if block data was passed to it', function () {
+      let blockTemplateBlockInstanceNameList, blocksInDOMNameList, returnedDOMElementsList
+      beforeEach(function (done) {
+        editor.init([])
 
-      returnedDOMElementsList = [...returnedDOMElementsList].map((returnedDOMElement) => returnedDOMElement.dataset.blockType)
+        const data = {
+          data: [
+            {
+              type: 'Paragraph',
+              data: {
+                text: 'Testing'
+              }
+            }
+          ]
+        }
 
-      expect(blockTemplateBlockInstanceNameList).to.eql(returnedDOMElementsList)
+        returnedDOMElementsList = editor.loadBlocks(data)
 
-      done()
+        done()
+      })
+
+      it('should load blocks listed in block template in DOM', function (done) {
+        blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+
+        blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+
+        expect(blockTemplateBlockInstanceNameList).to.eql(blocksInDOMNameList)
+
+        done()
+      })
+
+      it('should return DOM elements of blocks listed in data passed to it', function (done) {
+        blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
+
+        returnedDOMElementsList = [...returnedDOMElementsList].map((returnedDOMElement) => returnedDOMElement.dataset.blockType)
+
+        expect(blockTemplateBlockInstanceNameList).to.eql(returnedDOMElementsList)
+
+        done()
+      })
     })
   })
 })

@@ -13,6 +13,6 @@ const {
 const chai = require('chai')
 const expect = chai.expect
 
-describe('FreedomEditorInstance.saveBlocks()', function () {
+describe('FreedomEditorInstance.resetBlocks()', function () {
   let editorContainer, editor, paragraphBlock
 })
