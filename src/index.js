@@ -22,7 +22,7 @@ class FreedomEditor {
      * @property {[Array]} registeredBlocks An array of block instances to be registered in this editor instance.
      * @property {[Array]} blocksControllers Blocks controllers listed here will be applied to all blocks in this editor instance.  You should pass this array through FreedomEditor.init() instead of here.
      * @property {[Object]} i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
-     * @property {[String/Array]} defaultBlock Default block(s) to load when user create a new block(s).
+     * @property {[Array]} defaultBlock Default block(s) to load when user create a new block(s).
      *
      */
     const defaultOptions = {
@@ -63,8 +63,10 @@ class FreedomEditor {
       throw new Error('DefaultBlock must be defined when you initiate new editor.')
     }
 
-    if (!this.options.registeredBlocks.includes(this.options.defaultBlock)) {
-      throw new Error('You need to register your options.defaultBlock at options.registeredBlocks')
+    const isAllDefaultBlocksRegistered = this.options.defaultBlock.every((defaultBlock) => this.options.registeredBlocks.includes(defaultBlock))
+
+    if (!isAllDefaultBlocksRegistered) {
+      throw new Error('You need to register all your default blocks at options.registeredBlocks')
     }
 
     if (Array.isArray(this.options.blockTemplate) !== true) {
@@ -154,7 +156,8 @@ class FreedomEditor {
       if (this.options.blockTemplate.length > 0) {
         return this.options.blockTemplate.map((block) => this.renderBlock(block, 'true'))
       }
-      return this.renderBlock(this.options.defaultBlock, 'false')
+
+      return this.options.defaultBlock.map((defaultBlock) => this.renderBlock(defaultBlock, 'false'))
     }
 
     return savedData.data.map((block) => {
@@ -205,7 +208,9 @@ class FreedomEditor {
     })
 
     if (this.editor.childNodes.length === 0) {
-      this.renderBlock(this.options.defaultBlock, false, null)
+      this.options.defaultBlock.forEach((defaultBlock) => {
+        this.renderBlock(defaultBlock, false, null)
+      })
     }
   }
 }
