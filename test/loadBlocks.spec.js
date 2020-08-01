@@ -45,7 +45,7 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
 
         editor = new FreedomEditor({
           containerId: 'freedom-editor',
-          defaultBlock: paragraphBlock,
+          defaultBlock: [paragraphBlock],
           registeredBlocks: [
             paragraphBlock
           ],
@@ -60,23 +60,18 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
       })
 
       it('should load the default block in DOM', function (done) {
-        if (!Array.isArray(editor.options.defaultBlock)) {
-          defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
-          blocksInDOMNameList = [...editor.editor.childNodes]
-            .map((blockInDOM) => blockInDOM.dataset.blockType)
-            .join('')
-        }
+        defaultBlockInstanceNameList = editor.options.defaultBlock.map((defaultBlock) => defaultBlock.constructor.name)
+        blocksInDOMNameList = [...editor.editor.childNodes]
+          .map((blockInDOM) => blockInDOM.dataset.blockType)
 
         expect(defaultBlockInstanceNameList).to.eql(blocksInDOMNameList)
         done()
       })
 
       it('should return DOM element of the default block', function (done) {
-        if (!Array.isArray(editor.options.defaultBlock)) {
-          defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
-        }
+        defaultBlockInstanceNameList = editor.options.defaultBlock.map((defaultBlock) => defaultBlock.constructor.name)
 
-        expect(defaultBlockInstanceNameList).to.eql(returnedDOMElementsList.dataset.blockType)
+        expect(defaultBlockInstanceNameList).to.eql(returnedDOMElementsList.map((blockInDOM) => blockInDOM.dataset.blockType))
 
         done()
       })
@@ -89,7 +84,7 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
 
       editor = new FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: paragraphBlock,
+        defaultBlock: [paragraphBlock],
         registeredBlocks: [
           paragraphBlock
         ],

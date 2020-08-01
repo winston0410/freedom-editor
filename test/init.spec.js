@@ -47,7 +47,7 @@ describe('FreedomEditorInstance.init()', function () {
 
       editor = new FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: paragraphBlock,
+        defaultBlock: [paragraphBlock],
         registeredBlocks: [
 
         ]
@@ -65,7 +65,7 @@ describe('FreedomEditorInstance.init()', function () {
 
       editor = new FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: paragraphBlock,
+        defaultBlock: [paragraphBlock],
         registeredBlocks: [
           paragraphBlock
         ],

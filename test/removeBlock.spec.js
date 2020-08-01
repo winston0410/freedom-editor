@@ -41,7 +41,7 @@ describe('FreedomEditorInstance.removeBlock()', function () {
     it('should not remove that block from DOM', function (done) {
       editor = new FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: paragraphBlock,
+        defaultBlock: [paragraphBlock],
         registeredBlocks: [
           paragraphBlock
         ],
@@ -72,7 +72,7 @@ describe('FreedomEditorInstance.removeBlock()', function () {
       it('should not remove that block from DOM', function (done) {
         editor = new FreedomEditor({
           containerId: 'freedom-editor',
-          defaultBlock: paragraphBlock,
+          defaultBlock: [paragraphBlock],
           registeredBlocks: [
             paragraphBlock
           ],
@@ -87,19 +87,14 @@ describe('FreedomEditorInstance.removeBlock()', function () {
 
         [...editor.editor.childNodes].forEach((blockInDOM) => editor.removeBlock(blockInDOM))
 
-        let defaultBlockInstanceNameList
+        const defaultBlockInstanceNameList = editor.options.defaultBlock.map((defaultBlock) => defaultBlock.constructor.name)
+        blocksInDOMNameList = [...editor.editor.childNodes]
+          .map((blockInDOM) => blockInDOM.dataset.blockType)
 
-        if (!Array.isArray(editor.options.defaultBlock)) {
-          defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
-          blocksInDOMNameList = [...editor.editor.childNodes]
-            .map((blockInDOM) => blockInDOM.dataset.blockType)
-            .join('')
+        expect(editor.editor.childNodes).to.have.lengthOf(1)
+        expect(blocksInDOMNameList).to.eql(defaultBlockInstanceNameList)
 
-          expect(editor.editor.childNodes).to.have.lengthOf(1)
-          expect(blocksInDOMNameList).to.eql(defaultBlockInstanceNameList)
-
-          done()
-        }
+        done()
       })
     })
   })
