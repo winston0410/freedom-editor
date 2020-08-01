@@ -22,6 +22,8 @@ class FreedomEditor {
      * @property {[Array]} registeredBlocks An array of block instances to be registered in this editor instance.
      * @property {[Array]} blocksControllers Blocks controllers listed here will be applied to all blocks in this editor instance.  You should pass this array through FreedomEditor.init() instead of here.
      * @property {[Object]} i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
+     * @property {[String/Array]} defaultBlock Default block(s) to load when user create a new block(s).
+     *
      */
     const defaultOptions = {
       containerId: 'freedom-editor',

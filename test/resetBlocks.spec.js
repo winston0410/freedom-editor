@@ -31,39 +31,6 @@ describe('FreedomEditorInstance.resetBlocks()', function () {
     done()
   })
 
-  // describe('if block are listed in block template', function () {
-  //   beforeEach(function () {
-  //     editor = new FreedomEditor({
-  //       containerId: 'freedom-editor',
-  //       defaultBlock: paragraphBlock,
-  //       registeredBlocks: [
-  //         paragraphBlock
-  //       ],
-  //       blockTemplate: [
-  //         paragraphBlock
-  //       ]
-  //     })
-  //   })
-  //
-  //   let blocksInDOMNameList, blockTemplateBlockInstanceNameList
-  //
-  //   it('should not be removed but their content', function (done) {
-  //     editor.init([])
-  //
-  //     editor.loadBlocks()
-  //
-  //     editor.resetBlocks()
-  //
-  //     blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
-  //
-  //     blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
-  //
-  //     expect(blocksInDOMNameList).to.eql(blockTemplateBlockInstanceNameList)
-  //
-  //     done()
-  //   })
-  // })
-
   describe('if blocks are not listed in block template', function () {
     beforeEach(function () {
       editor = new FreedomEditor({
