@@ -37,7 +37,7 @@ describe('FreedomEditorInstance.constructor', function () {
 
       }
 
-      expect(() => FreedomEditor(options)).to.throw()
+      expect(() => FreedomEditor(options)).to.throw('containerId')
 
       done()
     })
@@ -45,11 +45,16 @@ describe('FreedomEditorInstance.constructor', function () {
 
   describe('if defaultBlocks is not defined', function () {
     it('should throw', function (done) {
+      const paragraphBlock = new Paragraph()
+
       const options = {
-        containerId: 'freedom-editor'
+        containerId: 'freedom-editor',
+        registeredBlocks: [
+          paragraphBlock
+        ]
       }
 
-      expect(() => FreedomEditor(options)).to.throw()
+      expect(() => FreedomEditor(options)).to.throw('defaultBlocks')
 
       done()
     })
@@ -66,7 +71,7 @@ describe('FreedomEditorInstance.constructor', function () {
         ]
       }
 
-      expect(() => FreedomEditor(options)).to.throw()
+      expect(() => FreedomEditor(options)).to.throw('registeredBlocks')
 
       done()
     })

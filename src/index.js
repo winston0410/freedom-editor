@@ -35,9 +35,9 @@ function FreedomEditor ({ containerId, i18n, blockTemplate, blocksControllers, r
     },
     blockTemplate: blockTemplate || [],
     blocksControllers: blocksControllers || [],
+    defaultBlocks: defaultBlocks || requiredParam('defaultBlocks'),
     // Ensure no duplicate values in registeredBlocks
-    registeredBlocks: (registeredBlocks) ? [...new Set(registeredBlocks)] : requiredParam('registeredBlocks'),
-    defaultBlocks: defaultBlocks || requiredParam('defaultBlocks')
+    registeredBlocks: (registeredBlocks) ? [...new Set(registeredBlocks)] : requiredParam('registeredBlocks')
   }
 
   const editor = document.getElementById(containerId)
@@ -171,7 +171,7 @@ function FreedomEditor ({ containerId, i18n, blockTemplate, blocksControllers, r
     const blocksInDOM = [...editor.childNodes]
 
     const data = blocksInDOM
-      .map((blockInDom, index) => getBlockInstancesListFromDOM(this)[index].save(blockInDom))
+      .map((blockInDom, index) => getBlockInstancesListFromDOM(options)[index].save(blockInDom))
       .filter(
         blockData => blockData !== (false || undefined)
       )

@@ -120,7 +120,7 @@ const getBlockInstancesListFromDOM = (options) => {
   const registeredBlockList = getRegisteredBlocksNameList(options)
 
   // Return list of Block instance, so that we can assign specific save() funciton for each block
-  return [...options.editor.childNodes]
+  return [...options.editorContainer.childNodes]
     .map((block) => {
       const indexInRegisteredBlockList = registeredBlockList.indexOf(block.dataset.blockType)
       if (indexInRegisteredBlockList !== -1) {
