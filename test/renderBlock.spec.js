@@ -53,7 +53,7 @@ describe('FreedomEditorInstance.renderBlock', function () {
 
   it('should return the rendered element', function (done) {
     editor.options.registeredBlocks.forEach((blockInstance) => {
-      const renderedBlock = editor.renderBlock(blockInstance)
+      const renderedBlock = editor.renderBlock({ blockInstance: blockInstance })
       expect(renderedBlock).to.match(`[data-block-type="${blockInstance.constructor.name}"]`)
       expect(editor.editor).to.contain(renderedBlock)
     })
@@ -64,7 +64,7 @@ describe('FreedomEditorInstance.renderBlock', function () {
   describe('if the block to render is listed in block template', function () {
     it('should set data-block-template as true', function (done) {
       editor.options.registeredBlocks.forEach((blockInstance) => {
-        const renderedBlock = editor.renderBlock(blockInstance, 'true')
+        const renderedBlock = editor.renderBlock({ blockInstance: blockInstance, isTemplateBlock: 'true' })
         expect(renderedBlock).to.match('[data-block-template="true"]')
       })
 
@@ -75,7 +75,7 @@ describe('FreedomEditorInstance.renderBlock', function () {
   describe('if the block to render is not listed in block template', function () {
     it('should set data-block-template as false', function (done) {
       editor.options.registeredBlocks.forEach((blockInstance) => {
-        const renderedBlock = editor.renderBlock(blockInstance, 'false')
+        const renderedBlock = editor.renderBlock({ blockInstance: blockInstance, isTemplateBlock: 'false' })
         expect(renderedBlock).to.match('[data-block-template="false"]')
       })
       done()
@@ -91,7 +91,7 @@ describe('FreedomEditorInstance.renderBlock', function () {
         }
       }
 
-      const renderedBlock = editor.renderBlock(editor.options.registeredBlocks[0], 'false', data)
+      const renderedBlock = editor.renderBlock({ blockInstance: editor.options.registeredBlocks[0], isTemplateBlock: 'false', savedData: data })
 
       expect(renderedBlock.querySelector('[contenteditable]')).to.have.text(data.data.text)
 

@@ -61,9 +61,9 @@ describe('FreedomEditorInstance.resetBlocks()', function () {
         ]
       }
 
-      editor.renderBlock(paragraphBlock)
+      editor.renderBlock({ blockInstance: paragraphBlock })
 
-      editor.renderBlock(paragraphBlock)
+      editor.renderBlock({ blockInstance: paragraphBlock })
 
       editor.resetBlocks()
 
