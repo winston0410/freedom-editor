@@ -134,14 +134,16 @@ Step 1\. Download Freedom editor from npm.
 npm i @freedom-editor/core
 ```
 
-Step 2\. Import Freedom Editor to a script for configuration and create a new instance of Freedom Editor.
+Step 2\. Import Freedom Editor to a script of your choice for configuration and call Freedom Editor.
 
 ```
 import { FreedomEditor } from '@freedom-editor/core'
 
-const editor = new FreedomEditor({
+const editor = FreedomEditor({
   containerId: 'freedom-editor',
-  defaultBlock: paragraphBlock,
+  defaultBlocks: [
+  paragraphBlock
+  ],
   registeredBlocks: [
     paragraphBlock
   ]
@@ -196,9 +198,11 @@ export default [{
 ```
 import { FreedomEditor } from '@freedom-editor/core'
 
-const editor = new FreedomEditor({
+const editor = FreedomEditor({
   containerId: 'freedom-editor',
-  defaultBlock: paragraphBlock,
+  defaultBlocks: [
+  paragraphBlock
+  ],
   registeredBlocks: [
     paragraphBlock
   ]
