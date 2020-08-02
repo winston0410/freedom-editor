@@ -30,7 +30,8 @@ class FreedomEditor {
       i18n: {
         locale: 'en-US',
         rtl: 'auto'
-      }
+      },
+      blockTemplate: []
     }
 
     if (customOptions !== undefined && typeof customOptions !== 'object') {
