@@ -142,5 +142,6 @@ module.exports = {
   shiftFieldFocus,
   moveBlock,
   getRegisteredBlocksNameList,
-  getBlockInstancesListFromDOM
+  getBlockInstancesListFromDOM,
+  requiredParam
 }
