@@ -151,10 +151,10 @@ class FreedomEditor {
   loadBlocks (savedData) {
     if (!savedData) {
       if (this.options.blockTemplate.length > 0) {
-        return this.options.blockTemplate.map((block) => this.renderBlock(block, 'true'))
+        return this.options.blockTemplate.map((block) => this.renderBlock({ blockInstance: block, isTemplateBlock: 'true' }))
       }
 
-      return this.options.defaultBlock.map((defaultBlock) => this.renderBlock(defaultBlock, 'false'))
+      return this.options.defaultBlock.map((defaultBlock) => this.renderBlock({ blockInstance: defaultBlock, isTemplateBlock: 'false' }))
     }
 
     return savedData.data.map((block) => {
@@ -165,7 +165,7 @@ class FreedomEditor {
       }
 
       // TODO: Fix bug where a block is template or not is not shown in the saved JSON data, thus the loaded block
-      return this.renderBlock(this.options.registeredBlocks[blockIndexInRegisteredBlockList], block.isTemplateBlock, block)
+      return this.renderBlock({ blockInstance: this.options.registeredBlocks[blockIndexInRegisteredBlockList], isTemplateBlock: block.isTemplateBlock, savedData: block })
     })
   }
 
@@ -206,7 +206,7 @@ class FreedomEditor {
 
     if (this.editor.childNodes.length === 0) {
       this.options.defaultBlock.forEach((defaultBlock) => {
-        this.renderBlock(defaultBlock, false, null)
+        this.renderBlock({ blockInstance: defaultBlock, isTemplateBlock: false })
       })
     }
   }
