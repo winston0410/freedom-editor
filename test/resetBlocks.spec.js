@@ -10,7 +10,9 @@ const jsdom = require('jsdom')
 const {
   JSDOM
 } = jsdom
-const dom = new JSDOM('<html><body></body></html>', { pretendToBeVisual: true })
+const dom = new JSDOM('<html><body></body></html>', {
+  pretendToBeVisual: true
+})
 
 global.document = dom.window.document
 global.window = dom.window
@@ -33,9 +35,11 @@ describe('FreedomEditorInstance.resetBlocks()', function () {
 
   describe('if blocks are not listed in block template', function () {
     beforeEach(function () {
-      editor = new FreedomEditor({
+      editor = FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: [paragraphBlock],
+        defaultBlocks: [
+          paragraphBlock
+        ],
         registeredBlocks: [
           paragraphBlock
         ],
@@ -51,34 +55,34 @@ describe('FreedomEditorInstance.resetBlocks()', function () {
       editor.init([])
 
       const data = {
-        data: [
-          {
-            type: 'Paragraph',
-            data: {
-              text: 'Testing'
-            }
+        data: [{
+          type: 'Paragraph',
+          data: {
+            text: 'Testing'
           }
-        ]
+        }]
       }
 
-      editor.renderBlock({ blockInstance: paragraphBlock })
+      editor.renderBlock({
+        blockInstance: paragraphBlock
+      })
 
-      editor.renderBlock({ blockInstance: paragraphBlock })
+      editor.renderBlock({
+        blockInstance: paragraphBlock
+      })
 
       editor.resetBlocks()
 
-      if (!Array.isArray(editor.options.defaultBlock)) {
-        defaultBlockInstanceNameList = editor.options.defaultBlock.constructor.name
-        blocksInDOMNameList = [...editor.editor.childNodes]
-          .map((blockInDOM) => blockInDOM.dataset.blockType)
-          .join('')
+      defaultBlockInstanceNameList = editor.options.defaultBlocks.map((blockInstance) => blockInstance.constructor.name)
 
-        expect(editor.editor.childNodes).to.have.lengthOf(1)
-        expect(blocksInDOMNameList).to.eql(defaultBlockInstanceNameList)
-      }
+      blocksInDOMNameList = [...editor.options.editorContainer.childNodes]
+        .map((blockInDOM) => blockInDOM.dataset.blockType)
+
+      expect(editor.options.editorContainer.childNodes).to.have.lengthOf(1)
+      expect(blocksInDOMNameList).to.eql(defaultBlockInstanceNameList);
 
       // Test if block content is removed
-      [...editor.editor.childNodes].forEach((blockInDOM) => {
+      [...editor.options.editorContainer.childNodes].forEach((blockInDOM) => {
         blockInDOM.querySelectorAll('[contenteditable]').forEach((editableField) => {
           expect(editableField.textContent).to.have.string('')
         })

@@ -39,9 +39,9 @@ describe('FreedomEditorInstance.removeBlock()', function () {
   describe('if the target block is included in block template', function () {
     let blocksInDOMNameList, blockTemplateBlockInstanceNameList
     it('should not remove that block from DOM', function (done) {
-      editor = new FreedomEditor({
+      editor = FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: [paragraphBlock],
+        defaultBlocks: [paragraphBlock],
         registeredBlocks: [
           paragraphBlock
         ],
@@ -54,9 +54,9 @@ describe('FreedomEditorInstance.removeBlock()', function () {
 
       editor.loadBlocks();
 
-      [...editor.editor.childNodes].forEach((blockInDOM) => editor.removeBlock(blockInDOM))
+      [...editor.options.editorContainer.childNodes].forEach((blockInDOM) => editor.removeBlock(blockInDOM))
 
-      blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+      blocksInDOMNameList = [...editor.options.editorContainer.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
 
       blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
 
@@ -70,9 +70,9 @@ describe('FreedomEditorInstance.removeBlock()', function () {
     let blocksInDOMNameList
     describe('if the target block is the last block in editor', function () {
       it('should not remove that block from DOM', function (done) {
-        editor = new FreedomEditor({
+        editor = FreedomEditor({
           containerId: 'freedom-editor',
-          defaultBlock: [paragraphBlock],
+          defaultBlocks: [paragraphBlock],
           registeredBlocks: [
             paragraphBlock
           ],
@@ -85,13 +85,13 @@ describe('FreedomEditorInstance.removeBlock()', function () {
 
         editor.loadBlocks();
 
-        [...editor.editor.childNodes].forEach((blockInDOM) => editor.removeBlock(blockInDOM))
+        [...editor.options.editorContainer.childNodes].forEach((blockInDOM) => editor.removeBlock(blockInDOM))
 
-        const defaultBlockInstanceNameList = editor.options.defaultBlock.map((defaultBlock) => defaultBlock.constructor.name)
-        blocksInDOMNameList = [...editor.editor.childNodes]
+        const defaultBlockInstanceNameList = editor.options.defaultBlocks.map((defaultBlock) => defaultBlock.constructor.name)
+        blocksInDOMNameList = [...editor.options.editorContainer.childNodes]
           .map((blockInDOM) => blockInDOM.dataset.blockType)
 
-        expect(editor.editor.childNodes).to.have.lengthOf(1)
+        expect(editor.options.editorContainer.childNodes).to.have.lengthOf(1)
         expect(blocksInDOMNameList).to.eql(defaultBlockInstanceNameList)
 
         done()

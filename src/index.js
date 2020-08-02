@@ -7,87 +7,66 @@ const {
   requiredParam
 } = require('./utilities/helper.js')
 
-class FreedomEditor {
-  /**
-   * Construct Freedom Editor instance
-   * @author Hugo Sum
-   * @lastUpdateDate 2020-07-16
-   * @param          {object}   customOptions An object with options to initialize Freedom Editor instance
-   */
-  constructor (customOptions) {
-    /**
-     * Default options for Freedom Editor instance
-     * @type {Object}
-     * @property {[String]} containerId The id of the container for Freedom Editor instance
-     * @property {[Array]} blockTemplate An array of block instances.  Blocks listed here will be rendered as template when the editor initialize, and their position will be fixed. This property is required.
-     * @property {[Array]} registeredBlocks An array of block instances to be registered in this editor instance.
-     * @property {[Array]} blocksControllers Blocks controllers listed here will be applied to all blocks in this editor instance.  You should pass this array through FreedomEditor.init() instead of here.
-     * @property {[Object]} i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
-     * @property {[Array]} defaultBlock Default block(s) to load when user create a new block(s).
-     *
-     */
-    const defaultOptions = {
-      containerId: 'freedom-editor',
-      i18n: {
-        locale: 'en-US',
-        rtl: 'auto'
-      },
-      blockTemplate: []
-    }
+/**
+ * Construct Freedom Editor instance
+ * @author Hugo Sum
+ * @lastUpdateDate 2020-07-16
+ * @param          {object}   customOptions An object with options to initialize Freedom Editor instance
+ */
 
-    if (customOptions !== undefined && typeof customOptions !== 'object') {
-      throw new Error('You can only pass an object as constructor options for FreedomEditor')
-    }
+/**
+ * Default options for Freedom Editor instance
+ * @type {Object}
+ * @property {[String]} containerId The id of the container for Freedom Editor instance
+ * @property {[Array]} blockTemplate An array of block instances.  Blocks listed here will be rendered as template when the editor initialize, and their position will be fixed. This property is required.
+ * @property {[Array]} registeredBlocks An array of block instances to be registered in this editor instance.
+ * @property {[Array]} blocksControllers Blocks controllers listed here will be applied to all blocks in this editor instance.  You should pass this array through FreedomEditor.init() instead of here.
+ * @property {[Object]} options.i18n An Object of internationalization options.  Default "locale" is "en-US" and "rtl" is "auto"
+ * @property {[Array]} defaultBlocks Default block(s) to load when user create a new block(s).
+ *
+ */
 
+function FreedomEditor ({ containerId, i18n, blockTemplate, blocksControllers, registeredBlocks, defaultBlocks }) {
+  let options = {
+    containerId: containerId || requiredParam('containerId'),
+    i18n: i18n || {
+      locale: 'en-US',
+      rtl: 'auto'
+    },
+    blockTemplate: blockTemplate || [],
+    blocksControllers: blocksControllers || [],
     // Ensure no duplicate values in registeredBlocks
-    customOptions.registeredBlocks = [...new Set(customOptions.registeredBlocks)]
-
-    this.options = {
-      ...defaultOptions,
-      ...customOptions
-    }
+    registeredBlocks: (registeredBlocks) ? [...new Set(registeredBlocks)] : requiredParam('registeredBlocks'),
+    defaultBlocks: defaultBlocks || requiredParam('defaultBlocks')
   }
+
+  const editor = document.getElementById(containerId)
+
+  editor.setAttribute('dir', options.i18n.rtl)
+
+  options.editorContainer = editor
+
+  options = Object.freeze(options)
 
   /**
    * Initialize editor and hook controllers to the editor in editor level.  controllers hooked here will apply to all blocks.
    * @param  {Array} controllersOptions An array containing all init functions of controllers
    * @return {Object} The instance of Freedom Editor
    */
-  init (controllersOptions) {
-    this.editor = document.getElementById(this.options.containerId)
-
-    if (this.editor === null) {
-      throw new Error('No DOM element can be found with the given ID for editor container.')
-    }
-
-    this.editor.setAttribute('dir', this.options.i18n.rtl)
-    if (!this.options.defaultBlock) {
-      throw new Error('DefaultBlock must be defined when you initiate new editor.')
-    }
-
-    const isAllDefaultBlocksRegistered = this.options.defaultBlock.every((defaultBlock) => this.options.registeredBlocks.includes(defaultBlock))
+  const init = (controllersOptions = []) => {
+    const isAllDefaultBlocksRegistered = options.defaultBlocks.every((defaultBlock) => options.registeredBlocks.includes(defaultBlock))
 
     if (!isAllDefaultBlocksRegistered) {
       throw new Error('You need to register all your default blocks at options.registeredBlocks')
     }
 
-    if (Array.isArray(this.options.blockTemplate) !== true) {
-      throw new Error('You need to pass an array as value for options.blockTemplate')
-    }
-
-    this.options.blockTemplate.forEach((blockInstance) => {
-      if (!this.options.registeredBlocks.includes(blockInstance)) {
-        throw new Error('You need to register blocks used in your block template at ptions.registeredBlocks.')
+    options.blockTemplate.forEach((blockInstance) => {
+      if (!options.registeredBlocks.includes(blockInstance)) {
+        throw new Error('You need to register blocks used in your block template at options.registeredBlocks.')
       }
     })
 
-    if (Array.isArray(controllersOptions) !== true) {
-      throw new Error('You need to pass an array to init')
-    }
-
-    this.options.blocksControllers = controllersOptions
-
-    return this.editor
+    return editor
   }
 
   /**
@@ -99,17 +78,21 @@ class FreedomEditor {
    * @param          {Object}   savedData          An object of data generated by save() method of a block instance
    * @return {[DOMString]} newBlock  Rendered block DOM string
    */
-  renderBlock ({ blockInstance = requiredParam('blockInstance'), isTemplateBlock, savedData }) {
+  const renderBlock = ({
+    blockInstance = requiredParam('blockInstance'),
+    isTemplateBlock = 'false',
+    savedData
+  }) => {
     // Assign order attribute to new block
-    const newBlock = blockInstance.render(this.options.i18n, savedData)
-    newBlock.dataset.order = this.editor.childNodes.length
+    const newBlock = blockInstance.render(options.i18n, savedData)
+    newBlock.dataset.order = editor.childNodes.length
     if (isTemplateBlock === 'true') {
       newBlock.dataset.blockTemplate = true
     } else {
       newBlock.dataset.blockTemplate = false
     }
 
-    const mergedControllers = this.options.blocksControllers.map((controllerForAllBlocks) => {
+    const mergedControllers = options.blocksControllers.map((controllerForAllBlocks) => {
       const controllerToCopyFrom = blockInstance.options.controllers.find((controllerForSpecificBlock) => controllerForAllBlocks.constructor.name === controllerForSpecificBlock.constructor.name)
       return Object.assign(controllerForAllBlocks, controllerToCopyFrom)
     })
@@ -118,7 +101,7 @@ class FreedomEditor {
       controller.init(this, newBlock)
     })
 
-    this.editor.append(newBlock)
+    editor.append(newBlock)
 
     return newBlock
   }
@@ -128,16 +111,16 @@ class FreedomEditor {
    * @param  {Object} block Block to be removed from DOM
    * @return {undefined}
    */
-  removeBlock (block) {
-    if (block.matches('[data-block-template="true"]') || this.editor.childNodes.length === 1) {
+  const removeBlock = (block) => {
+    if (block.matches('[data-block-template="true"]') || editor.childNodes.length === 1) {
       return
     }
 
-    if (block !== this.editor.firstElementChild) {
-      this.shiftBlockFocus(block, 'up', block.previousElementSibling)
+    if (block !== editor.firstElementChild) {
+      shiftBlockFocus(block, 'up', block.previousElementSibling)
     } else {
       // Shift focus down if the removing the first block
-      this.shiftBlockFocus(block, 'down', block.nextElementSibling)
+      shiftBlockFocus(block, 'down', block.nextElementSibling)
     }
 
     block.remove()
@@ -148,24 +131,34 @@ class FreedomEditor {
    * @param  {Object} savedData Data you saved with saveBlocks(). If you don't pass any saved Data here, blocks listed in block template will be loaded.
    * @return {Array} Blocks loaded in editor instance
    */
-  loadBlocks (savedData) {
+  const loadBlocks = (savedData) => {
     if (!savedData) {
-      if (this.options.blockTemplate.length > 0) {
-        return this.options.blockTemplate.map((block) => this.renderBlock({ blockInstance: block, isTemplateBlock: 'true' }))
+      if (options.blockTemplate.length > 0) {
+        return options.blockTemplate.map((block) => renderBlock({
+          blockInstance: block,
+          isTemplateBlock: 'true'
+        }))
       }
 
-      return this.options.defaultBlock.map((defaultBlock) => this.renderBlock({ blockInstance: defaultBlock, isTemplateBlock: 'false' }))
+      return options.defaultBlocks.map((defaultBlock) => renderBlock({
+        blockInstance: defaultBlock,
+        isTemplateBlock: 'false'
+      }))
     }
 
     return savedData.data.map((block) => {
-      const blockIndexInRegisteredBlockList = getRegisteredBlocksNameList(this).indexOf(block.type)
+      const blockIndexInRegisteredBlockList = getRegisteredBlocksNameList(options).indexOf(block.type)
 
       if (blockIndexInRegisteredBlockList === -1) {
         throw new Error("You are trying to load a block that you haven't registered when you initzalize the editor")
       }
 
       // TODO: Fix bug where a block is template or not is not shown in the saved JSON data, thus the loaded block
-      return this.renderBlock({ blockInstance: this.options.registeredBlocks[blockIndexInRegisteredBlockList], isTemplateBlock: block.isTemplateBlock, savedData: block })
+      return renderBlock({
+        blockInstance: options.registeredBlocks[blockIndexInRegisteredBlockList],
+        isTemplateBlock: block.isTemplateBlock,
+        savedData: block
+      })
     })
   }
 
@@ -173,9 +166,9 @@ class FreedomEditor {
    * Save data from all blocks
    * @return {Object} An object containing datas of all blocks and saving timestamp
    */
-  saveBlocks () {
+  const saveBlocks = () => {
     // Get block list in editor in DOM
-    const blocksInDOM = [...this.editor.childNodes]
+    const blocksInDOM = [...editor.childNodes]
 
     const data = blocksInDOM
       .map((blockInDom, index) => getBlockInstancesListFromDOM(this)[index].save(blockInDom))
@@ -192,8 +185,8 @@ class FreedomEditor {
   /**
    * Reset editor and only keeps its template block
    */
-  resetBlocks () {
-    [...this.editor.childNodes].forEach((block) => {
+  const resetBlocks = () => {
+    [...editor.childNodes].forEach((block) => {
       if (!block.matches('[data-block-template="true"]')) {
         block.remove()
       } else {
@@ -204,17 +197,26 @@ class FreedomEditor {
       }
     })
 
-    if (this.editor.childNodes.length === 0) {
-      this.options.defaultBlock.forEach((defaultBlock) => {
-        this.renderBlock({ blockInstance: defaultBlock, isTemplateBlock: false })
+    if (editor.childNodes.length === 0) {
+      options.defaultBlocks.forEach((defaultBlock) => {
+        renderBlock({
+          blockInstance: defaultBlock,
+          isTemplateBlock: false
+        })
       })
     }
   }
-}
 
-FreedomEditor.prototype.shiftFieldFocus = shiftFieldFocus
-FreedomEditor.prototype.shiftBlockFocus = shiftBlockFocus
-FreedomEditor.prototype.moveBlock = moveBlock
+  return {
+    options,
+    init,
+    saveBlocks,
+    loadBlocks,
+    resetBlocks,
+    renderBlock,
+    removeBlock
+  }
+}
 
 module.exports = {
   FreedomEditor

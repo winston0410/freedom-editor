@@ -43,9 +43,9 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
       beforeEach(function (done) {
         paragraphBlock = new Paragraph()
 
-        editor = new FreedomEditor({
+        editor = FreedomEditor({
           containerId: 'freedom-editor',
-          defaultBlock: [paragraphBlock],
+          defaultBlocks: [paragraphBlock],
           registeredBlocks: [
             paragraphBlock
           ],
@@ -60,8 +60,8 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
       })
 
       it('should load the default block in DOM', function (done) {
-        defaultBlockInstanceNameList = editor.options.defaultBlock.map((defaultBlock) => defaultBlock.constructor.name)
-        blocksInDOMNameList = [...editor.editor.childNodes]
+        defaultBlockInstanceNameList = editor.options.defaultBlocks.map((defaultBlock) => defaultBlock.constructor.name)
+        blocksInDOMNameList = [...editor.options.editorContainer.childNodes]
           .map((blockInDOM) => blockInDOM.dataset.blockType)
 
         expect(defaultBlockInstanceNameList).to.eql(blocksInDOMNameList)
@@ -69,7 +69,7 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
       })
 
       it('should return DOM element of the default block', function (done) {
-        defaultBlockInstanceNameList = editor.options.defaultBlock.map((defaultBlock) => defaultBlock.constructor.name)
+        defaultBlockInstanceNameList = editor.options.defaultBlocks.map((defaultBlock) => defaultBlock.constructor.name)
 
         expect(defaultBlockInstanceNameList).to.eql(returnedDOMElementsList.map((blockInDOM) => blockInDOM.dataset.blockType))
 
@@ -82,9 +82,9 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
     beforeEach(function (done) {
       paragraphBlock = new Paragraph()
 
-      editor = new FreedomEditor({
+      editor = FreedomEditor({
         containerId: 'freedom-editor',
-        defaultBlock: [paragraphBlock],
+        defaultBlocks: [paragraphBlock],
         registeredBlocks: [
           paragraphBlock
         ],
@@ -106,7 +106,7 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
       it('should load blocks listed in block template in DOM', function (done) {
         blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
 
-        blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+        blocksInDOMNameList = [...editor.options.editorContainer.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
 
         expect(blockTemplateBlockInstanceNameList).to.eql(blocksInDOMNameList)
 
@@ -148,7 +148,7 @@ describe('FreedomEditorInstance.loadBlocks()', function () {
       it('should load blocks listed in block template in DOM', function (done) {
         blockTemplateBlockInstanceNameList = editor.options.blockTemplate.map((blockInstance) => blockInstance.constructor.name)
 
-        blocksInDOMNameList = [...editor.editor.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
+        blocksInDOMNameList = [...editor.options.editorContainer.childNodes].map((blockInDOM) => blockInDOM.dataset.blockType)
 
         expect(blockTemplateBlockInstanceNameList).to.eql(blocksInDOMNameList)
 

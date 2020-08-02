@@ -105,8 +105,8 @@ const moveBlock = (blockToMove, direction) => {
   }
 }
 
-const getRegisteredBlocksNameList = (editorInstance) => {
-  return editorInstance.options.registeredBlocks.map((registeredBlock) => {
+const getRegisteredBlocksNameList = (options) => {
+  return options.registeredBlocks.map((registeredBlock) => {
     return registeredBlock.constructor.name
   })
 }
@@ -116,15 +116,15 @@ const getRegisteredBlocksNameList = (editorInstance) => {
  * @param  {Class} editorInstance An instance of the editor
  * @return {Array}                an array of block instances of blocks currently in DOM
  */
-const getBlockInstancesListFromDOM = (editorInstance) => {
-  const registeredBlockList = getRegisteredBlocksNameList(editorInstance)
+const getBlockInstancesListFromDOM = (options) => {
+  const registeredBlockList = getRegisteredBlocksNameList(options)
 
   // Return list of Block instance, so that we can assign specific save() funciton for each block
-  return [...editorInstance.editor.childNodes]
+  return [...options.editor.childNodes]
     .map((block) => {
       const indexInRegisteredBlockList = registeredBlockList.indexOf(block.dataset.blockType)
       if (indexInRegisteredBlockList !== -1) {
-        return editorInstance.options.registeredBlocks[indexInRegisteredBlockList]
+        return options.registeredBlocks[indexInRegisteredBlockList]
       }
     })
 }

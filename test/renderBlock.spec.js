@@ -31,9 +31,9 @@ describe('FreedomEditorInstance.renderBlock', function () {
     editorContainer.setAttribute('id', 'freedom-editor')
     document.body.append(editorContainer)
 
-    editor = new FreedomEditor({
+    editor = FreedomEditor({
       containerId: 'freedom-editor',
-      defaultBlock: [
+      defaultBlocks: [
         paragraphBlock
       ],
       registeredBlocks: [
@@ -55,7 +55,7 @@ describe('FreedomEditorInstance.renderBlock', function () {
     editor.options.registeredBlocks.forEach((blockInstance) => {
       const renderedBlock = editor.renderBlock({ blockInstance: blockInstance })
       expect(renderedBlock).to.match(`[data-block-type="${blockInstance.constructor.name}"]`)
-      expect(editor.editor).to.contain(renderedBlock)
+      expect(editor.options.editorContainer).to.contain(renderedBlock)
     })
 
     done()
