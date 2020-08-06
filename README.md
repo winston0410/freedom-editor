@@ -62,7 +62,7 @@ The core of Freedom Editor is written in vanilla code, and it only weights **1.5
 - i18n and rtl support
 - Clean JS Object output (You can define your own data structure!)
 
-  ```
+  ```javascript
   {
     timestamp: 1594882024298,
     data: [{
@@ -122,7 +122,7 @@ You need to have [Node.js](https://nodejs.org/en/) installed to easily download 
 
 npm will be installed by default when you install Node.js. Enter the following command in your terminal.
 
-```
+```shell
 curl "https://nodejs.org/dist/latest/node-${VERSION:-$(wget -qO- https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')}.pkg" > "$HOME/Downloads/node-latest.pkg" && sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"
 ```
 
@@ -130,13 +130,13 @@ curl "https://nodejs.org/dist/latest/node-${VERSION:-$(wget -qO- https://nodejs.
 
 Step 1\. Download Freedom editor from npm.
 
-```
+```shell
 npm i @freedom-editor/core
 ```
 
 Step 2\. Import Freedom Editor to a script of your choice for configuration and call Freedom Editor.
 
-```
+```javascript
 import { FreedomEditor } from '@freedom-editor/core'
 
 const editor = FreedomEditor({
@@ -152,13 +152,13 @@ const editor = FreedomEditor({
 
 Step 3\. Call `FreedomEditor.init()` to set up the editor and hook controllers you want to use to blocks.
 
-```
+```javascript
 editor.init()
 ```
 
 Step 4\. Call `FreedomEditor.loadBlocks()` to load blocks from block template or saved data.
 
-```
+```javascript
 editor.loadBlocks()
 ```
 
@@ -168,7 +168,7 @@ Step 5\. Use bundler tools like `rollup.js` to bundle Freedom Editor and other b
 
 You will need to use plugins like `@rollup/plugin-node-resolve` and `@rollup/plugin-commonjs` to solve all dependencies.
 
-```
+```javascript
 //rollup.config.js
 
 const {
@@ -195,7 +195,7 @@ export default [{
 
 ### Full Code Example
 
-```
+```javascript
 import { FreedomEditor } from '@freedom-editor/core'
 
 const editor = FreedomEditor({
