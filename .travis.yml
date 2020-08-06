@@ -1,19 +1,16 @@
 ---
 language:
-  - node_js
-
-env:
-  global:
-    - CC_TEST_REPORTER_ID=f71e9c72ddf8c973beef67d0aa4473e8450c25726c978dfeef44f04490fd47a3
-
+- node_js
+node_js:
+- "12"
+install:
+- npm install -q --no-color --no-progress
 before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- ./cc-test-reporter before-build
+script:
+- npx nyc --reporter=lcov npx mocha
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-
-after_success:
-  - npm run coverage
+- ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 ---
