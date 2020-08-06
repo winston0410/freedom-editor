@@ -30,7 +30,7 @@ If you want to publish your controller as a scoped packages under `@freedom-edit
 
 In Freedom Editor, controllers are attached to blocks instead of the editor. You can attach a controller to all blocks when you create a new instance of `FreedomEditor` by passing them as value of `customOptions.blocksControllers()`.
 
-```
+```javascript
 import { FreedomEditor } from '@freedom-editor/core'
 
 const editor = new FreedomEditor({
@@ -44,7 +44,7 @@ const editor = new FreedomEditor({
 
 You can also attach it selectively to specific block when you create a new instance for them.
 
-```
+```javascript
 import { FreedomEditor } from '@freedom-editor/core'
 
 import { Paragraph } from '@freedom-editor/lighterhtml-paragraph-block'
@@ -66,7 +66,7 @@ All elements created by controllers are encapsulated inside the container of a b
 
 A valid controller in Freedom Editor needs to have an `init()` method. This method will be called when a block is rendered to DOM with `FreedomEditor.renderBlock()`, with the newly rendered block and the instance of Freedom Editor passed as parameters to `init()`.
 
-```
+```javascript
 init (editorInstance, renderedBlock){
   //Make your transformation here
 }
@@ -84,13 +84,13 @@ The skeleton of a controller in Freedom Editor looks like this:
 
 After you have created your block, you should publish it as an NPM package. First of all, log in to NPM in your terminal(Assuming you have `npm init` already, which you should be.)
 
-```
+```shell
 npm login
 ```
 
 Answer all authentication questions. Once you have successfully logged in, run the following command to publish your package.
 
-```
+```shell
 npm publish --access public
 ```
 

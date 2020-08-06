@@ -32,30 +32,30 @@ If you publish your block as an unscoped package, you need to add `freedom-edito
 
 If you want to publish your block as a scoped packages under `@freedom-editor`, send us a pull request.
 
-```
+```json
 //package.json
 "name": "freedom-editor-{framework-name}-{functionality}-block"
 ```
 
 For example, a block that renders a `<p>` tag and is built with React should be named as:
 
-```
+```json
 //package.json
-"name": freedom-editor-react-paragraph-block
+"name": "freedom-editor-react-paragraph-block"
 ```
 
 A block that renders a FAQ box and is build with lighterhtml should be named as:
 
-```
+```json
 //package.json
-"name": freedom-editor-lighterhtml-FAQ-block
+"name": "freedom-editor-lighterhtml-FAQ-block"
 ```
 
 A block that renders a `<h1>` tag and is built without any framework(vanilla code) should be named as:
 
-```
+```json
 //package.json
-"name": freedom-editor-vanilla-heading-block
+"name": "freedom-editor-vanilla-heading-block"
 ```
 
 ### Structure of a block in Freedom Editor
@@ -68,7 +68,7 @@ A valid block in Freedom Editor is composed of two major methods, `render()` and
 
 The skeleton of a block in Freedom Editor looks like this:
 
-```
+```javascript
 class blockNameOfYourChoice {
   constructor (customOptions) {
     const defaultOptions = {
@@ -123,7 +123,7 @@ A valid block should render elements in the following structure in the DOM.
 
 - `contenteditable` fields in a block need to take a variable, so that previously saved data can be loaded when they are passed through `FreedomEditor.renderBlock()`.
 
-```
+```javascript
 //Example from freedom-editor-lighterhtml-paragraph-block
 
 class Paragraph {
@@ -145,13 +145,13 @@ TODO
 
 After you have created your block, you should publish it as an NPM package. First of all, log in to NPM in your terminal(Assuming you have `npm init` already, which you should be.)
 
-```
+```shell
 npm login
 ```
 
 Answer all authentication questions. Once you have successfully logged in, run the following command to publish your package.
 
-```
+```shell
 npm publish --access public
 ```
 
